@@ -1,0 +1,7 @@
+[submodule "srv/salt/cis-saltstack"]
+  path = srv/salt/cis-saltstack
+  url = https://github.com/chekolyn/cis-saltstack
+
+[submodule "srv/salt/eramba"]
+  path = srv/salt/eramba
+  url = https://github.com/saltstack-formulas/eramba-formula
