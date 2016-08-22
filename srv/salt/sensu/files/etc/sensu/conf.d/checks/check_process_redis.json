@@ -1,0 +1,18 @@
+{
+    "checks": {
+        "process_redis": {
+            "command": "/etc/sensu/plugins/check-process.pl -c status -p redis-server",
+            "wiki": "http://wiki.something/for/check/failure",
+            "interval": 60,
+            "occurrences": 5,                        
+            "handlers": [ 
+                "default",
+                "slack",
+                "mailer"
+            ],
+            "subscribers": [
+                "redis"
+            ]
+        }
+    }
+}

@@ -1,0 +1,23 @@
+#!/bin/bash
+#
+#Src rpm name and path#
+SRC=$1
+#destination dir (preferrably the trunk of subversion.) no trailing '/' needed.
+DST=$2
+#short name for hudson job.
+SHORT=`basename $1|perl -p -i -e 's/-\d+.*//g'`
+#make the dir
+echo "Making: $DST/$SHORT/{SRPMS,SPECS,BUILD,SOURCES}................"
+mkdir -p $DST/$SHORT/{SRPMS,SPECS,BUILD,SOURCES}
+CUR=`pwd`
+#go to the dest.
+cd $DST/$SHORT
+#extract the goodies
+echo "Extracting src.rpm contents......."
+rpm2cpio $SRC | cpio -i -d -m -v 
+#find the spec file (should ONLY be 1 per rpm)
+find . -maxdepth 1 -type f -name *.spec -exec mv {} SPECS/$SHORT.spec \;
+#move the rest into the sources dir.
+find . -maxdepth 1 -type f -exec mv {} SOURCES/ \;
+#go back
+cd $CUR

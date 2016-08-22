@@ -1,0 +1,2 @@
+jdk:
+  pkg.installed: []

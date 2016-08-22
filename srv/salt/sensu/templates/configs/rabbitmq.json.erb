@@ -1,0 +1,9 @@
+{
+    "rabbitmq": {
+        "host":     "<%= scope.lookupvar('rabbitmq_host') %>",
+        "port":     <%= scope.lookupvar('rabbitmq_port') %>,
+        "vhost":    "<%= scope.lookupvar('rabbitmq_vhost') %>",
+        "user":     "<%= scope.lookupvar('rabbitmq_user') %>",
+        "password": "<%= scope.lookupvar('rabbitmq_password') %>"
+    }
+}

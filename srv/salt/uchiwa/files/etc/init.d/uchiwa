@@ -1,0 +1,115 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          uchiwa
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Uchiwa, a Sensu dashboard.
+# Description:       Uchiwa, a Sensu dashboard, created by Simon Plourde.
+### END INIT INFO
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+export PATH="$PATH:/usr/lib/golang/bin"
+
+name="uchiwa"
+user="$name"
+appdir="/opt/$name"
+program="/opt/$name/$name.go"
+log_dir="/var/log/$name"
+args="-c $appdir/config.json -p $appdir/public"
+pidfile="/var/run/$name.pid"
+lockfile="/var/lock/subsys/$name"
+
+if [[ ! -z $log_dir ]]
+then
+    mkdir -p $log_dir
+    chown -R $name:sensu $log_dir
+fi
+
+[ -r /etc/default/$name ] && . /etc/default/$name
+[ -r /etc/sysconfig/$name ] && . /etc/sysconfig/$name
+
+start() {
+    echo -n $"Starting $name: "
+    exec="cd $appdir && godep go run $name.go"
+    daemon "su -s /bin/sh $user -c '$exec >> $log_dir/uchiwa.log 2> $log_dir/uchiwa.err &' "
+    retval=$?
+    if [ $retval -eq 0 ] 
+    then
+        getpid
+        # pid=`ps -ef | grep "sh -c cd /opt/uchiwa && godep go run uchiwa.go" | grep -v grep | awk '{print $2}'`
+        if [[ -z $pid ]]
+        then
+            echo $pid > $pidfile
+        else
+            return 2
+        fi
+    fi
+    echo
+    [ $retval -eq 0 ] && touch $lockfile
+    return $retval
+}
+
+stop() {
+    echo -n $"Stopping $name: "
+    killproc $name
+    retval=$?
+    if [ $retval -eq 0 ]
+    then
+        rm -f $pidfile
+        rm -f $lockfile
+    fi
+    echo
+    return $retval
+}
+
+getpid(){
+    pid=`ps -ef | grep "/tmp/go-build" | grep $name | awk '{print $2}'`
+}
+
+rh_status() {
+    status $name
+}
+
+rh_status_q() {
+    rh_status >/dev/null 2>&1
+}
+
+force_stop() {
+    if rh_status ; then
+        killall -HUP $name
+        rm -f $pidfile
+        rm -f $lockfile
+    fi
+}
+
+
+case "$1" in
+    start)
+        rh_status_q && exit 0
+        $1
+        ;;
+    stop)
+        rh_status_q || exit 0
+        $1
+        ;;
+    force-stop) 
+        force_stop 
+        ;;
+    status)
+        rh_status
+        ;;
+    restart)
+        stop
+        start
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart|status|force-stop}" >&2
+        exit 3
+    ;;
+esac
+
+exit $?

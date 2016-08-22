@@ -1,0 +1,18 @@
+{
+    "checks": {
+        "diskfree_root": {
+            "command": "/etc/sensu/plugins/check-disk-usage.rb  /dev/VolGroup/lv_root",
+            "wiki": "http://wiki.something/for/check/failure",
+            "interval": 60,
+            "occurrences": 5,
+            "handlers": [ 
+                "default",
+                "slack",
+                "mailer"
+            ],
+            "subscribers": [
+                "default"
+            ]
+        }
+    }
+}

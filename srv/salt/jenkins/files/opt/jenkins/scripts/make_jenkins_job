@@ -1,0 +1,187 @@
+#!/bin/bash
+JOBNAME=$1
+echo "Creating hudson job: ${JOBNAME}..."
+cp -r _template_job /opt/jenkins/home/jobs/$JOBNAME 
+echo "Please log into hudson and reload the configuration from disk.."
+if [[ "$2" == "noarch" ]];
+then
+cat > /opt/jenkins/home/jobs/$JOBNAME/config.xml <<EOF
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <jenkins.plugins.slack.SlackNotifier_-SlackJobProperty plugin="slack@1.2">
+      <room></room>
+      <startNotification>false</startNotification>
+      <notifySuccess>false</notifySuccess>
+      <notifyAborted>false</notifyAborted>
+      <notifyNotBuilt>false</notifyNotBuilt>
+      <notifyUnstable>false</notifyUnstable>
+      <notifyFailure>false</notifyFailure>
+      <notifyBackToNormal>false</notifyBackToNormal>
+    </jenkins.plugins.slack.SlackNotifier_-SlackJobProperty>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@1.8.4">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
+      <throttleEnabled>false</throttleEnabled>
+      <throttleOption>project</throttleOption>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+  </properties>
+  <scm class="hudson.scm.SubversionSCM" plugin="subversion@2.5">
+    <locations>
+      <hudson.scm.SubversionSCM_-ModuleLocation>
+        <remote>svn+ssh://jenkins@shared-subversion-001.p.use1.risingtidegames.com/repos/ops/RPMS/${JOBNAME}</remote>
+        <local>${JOBNAME}</local>
+        <credentialsId>e54b830a-5ab6-46ce-90c4-90db24fc3cb8</credentialsId>
+        <local>.</local>
+        <depthOption>infinity</depthOption>
+        <ignoreExternalsOption>true</ignoreExternalsOption>
+      </hudson.scm.SubversionSCM_-ModuleLocation>
+    </locations>
+    <useUpdate>true</useUpdate>
+    <excludedRegions></excludedRegions>
+    <includedRegions></includedRegions>
+    <excludedUsers></excludedUsers>
+    <excludedRevprop></excludedRevprop>
+    <excludedCommitMessages></excludedCommitMessages>
+    <workspaceUpdater class="hudson.scm.subversion.UpdateUpdater"/>
+    <ignoreDirPropChanges>false</ignoreDirPropChanges>
+    <filterChangelog>false</filterChangelog>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+    <triggers class="vector">
+    <hudson.triggers.SCMTrigger>
+      <spec>*/5 * * * *</spec>
+    </hudson.triggers.SCMTrigger>
+  </triggers>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>
+rm -f \${JOB_NAME}/SRPMS/*.src.rpm
+
+rpmbuild -bs \${JOB_NAME}/SPECS/\${JOB_NAME}.spec --define "_topdir \${WORKSPACE}/\${JOB_NAME}" --nodeps
+
+/usr/bin/mock -r linux-x86_64-exec\${EXECUTOR_NUMBER} rebuild \${JOB_NAME}/SRPMS/*.src.rpm --resultdir=/opt/rpmbuild_workspace/\${JOB_NAME}/results/\${JOB_NAME}-\${BUILD_ID}/rpms --cleanup-after
+
+    </command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <hudson.plugins.s3.S3BucketPublisher plugin="s3@0.7">
+      <profileName>APP-slots-us-east-1-InstanceRole-XJJQUIIGW0S4</profileName>
+      <entries>
+        <hudson.plugins.s3.Entry>
+          <bucket>s3://netflix-yumrepo/noarch</bucket>
+          <sourceFile>asdf</sourceFile>
+          <storageClass>STANDARD</storageClass>
+          <selectedRegion>us-east-1</selectedRegion>
+          <noUploadOnFailure>true</noUploadOnFailure>
+          <uploadFromSlave>false</uploadFromSlave>
+          <managedArtifacts>false</managedArtifacts>
+          <useServerSideEncryption>false</useServerSideEncryption>
+          <flatten>false</flatten>
+        </hudson.plugins.s3.Entry>
+      </entries>
+      <userMetadata/>
+    </hudson.plugins.s3.S3BucketPublisher>
+  </publishers>
+  <buildWrappers/>
+</project>
+EOF
+else
+cat > /opt/jenkins/home/jobs/$JOBNAME/config.xml <<EOF
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <jenkins.plugins.slack.SlackNotifier_-SlackJobProperty plugin="slack@1.2">
+      <room></room>
+      <startNotification>false</startNotification>
+      <notifySuccess>false</notifySuccess>
+      <notifyAborted>false</notifyAborted>
+      <notifyNotBuilt>false</notifyNotBuilt>
+      <notifyUnstable>false</notifyUnstable>
+      <notifyFailure>false</notifyFailure>
+      <notifyBackToNormal>false</notifyBackToNormal>
+    </jenkins.plugins.slack.SlackNotifier_-SlackJobProperty>
+    <hudson.plugins.throttleconcurrents.ThrottleJobProperty plugin="throttle-concurrents@1.8.4">
+      <maxConcurrentPerNode>0</maxConcurrentPerNode>
+      <maxConcurrentTotal>0</maxConcurrentTotal>
+      <throttleEnabled>false</throttleEnabled>
+      <throttleOption>project</throttleOption>
+    </hudson.plugins.throttleconcurrents.ThrottleJobProperty>
+  </properties>
+  <scm class="hudson.scm.SubversionSCM" plugin="subversion@2.5">
+    <locations>
+      <hudson.scm.SubversionSCM_-ModuleLocation>
+        <remote>svn+ssh://jenkins@shared-subversion-001.p.use1.risingtidegames.com/repos/ops/RPMS/${JOBNAME}</remote>
+        <local>${JOBNAME}</local>
+        <credentialsId>e54b830a-5ab6-46ce-90c4-90db24fc3cb8</credentialsId>
+        <local>.</local>
+        <depthOption>infinity</depthOption>
+        <ignoreExternalsOption>true</ignoreExternalsOption>
+      </hudson.scm.SubversionSCM_-ModuleLocation>
+    </locations>
+    <useUpdate>true</useUpdate>
+    <excludedRegions></excludedRegions>
+    <includedRegions></includedRegions>
+    <excludedUsers></excludedUsers>
+    <excludedRevprop></excludedRevprop>
+    <excludedCommitMessages></excludedCommitMessages>
+    <workspaceUpdater class="hudson.scm.subversion.UpdateUpdater"/>
+    <ignoreDirPropChanges>false</ignoreDirPropChanges>
+    <filterChangelog>false</filterChangelog>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+    <triggers class="vector">
+    <hudson.triggers.SCMTrigger>
+      <spec>*/5 * * * *</spec>
+    </hudson.triggers.SCMTrigger>
+  </triggers>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>
+rm -f \${JOB_NAME}/SRPMS/*.src.rpm
+
+rpmbuild -bs \${JOB_NAME}/SPECS/\${JOB_NAME}.spec --define "_topdir \${WORKSPACE}/\${JOB_NAME}" --nodeps
+
+/usr/bin/mock -r linux-x86_64-exec\${EXECUTOR_NUMBER} rebuild \${JOB_NAME}/SRPMS/*.src.rpm --resultdir=/opt/rpmbuild_workspace/\${JOB_NAME}/results/\${JOB_NAME}-\${BUILD_ID}/rpms --cleanup-after
+
+    </command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <hudson.plugins.s3.S3BucketPublisher plugin="s3@0.7">
+      <profileName>APP-slots-us-east-1-InstanceRole-XJJQUIIGW0S4</profileName>
+      <entries>
+        <hudson.plugins.s3.Entry>
+          <bucket>s3://netflix-yumrepo/noarch</bucket>
+          <sourceFile>asdf</sourceFile>
+          <storageClass>STANDARD</storageClass>
+          <selectedRegion>us-east-1</selectedRegion>
+          <noUploadOnFailure>true</noUploadOnFailure>
+          <uploadFromSlave>false</uploadFromSlave>
+          <managedArtifacts>false</managedArtifacts>
+          <useServerSideEncryption>false</useServerSideEncryption>
+          <flatten>false</flatten>
+        </hudson.plugins.s3.Entry>
+      </entries>
+      <userMetadata/>
+    </hudson.plugins.s3.S3BucketPublisher>
+  </publishers>
+  <buildWrappers/>
+</project>
+EOF
+fi
+
+chown -R jenkins:mock /opt/jenkins

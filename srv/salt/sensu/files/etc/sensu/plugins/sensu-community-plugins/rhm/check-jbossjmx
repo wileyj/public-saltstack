@@ -1,0 +1,54 @@
+#!/bin/sh
+## JBoss Nagios Plugin
+##
+export JBOSS_SERVER=$1
+export JBOSS_MBEAN=$2
+export JMX_ATTR=$3
+export WARN=$4
+export CRITICAL=$5
+
+export JBOSS_HOME=`ls -1d /opt/jboss*|head -n 1`
+if [ "x$JAVA_HOME" = "x" ]; then
+    export JAVA_HOME=`ls -1d /usr/java/jdk*|head -n 1`
+fi
+
+if [[ $1 = "--help" ||  $1 = "--h" || $1 = "-help" || $1 = "-h"  ]]; then
+        echo check_jbossjmx Usage
+        echo "jbossJMX_plugin <JBoss Instance Name> <JBoss MBean Object Name> <JBoss MBean Attribute> <Warn Threshhold> <Critical Threshhold>"
+        exit 3
+fi
+
+export READING=`$JBOSS_HOME/bin/twiddle.sh -s $JBOSS_SERVER  get $JBOSS_MBEAN $JMX_ATTR | awk '{split($1,names,"="); print names[2]; }' `
+
+if [ -z $READING ]; then
+  echo "JMX CRITICAL - No Response"
+  exit 2
+fi
+
+if [ $CRITICAL -ge $WARN ]; then
+  if [ $READING -ge $CRITICAL ]; then
+    echo "JMX ATTRIBUTE CRITICAL" - $JBOSS_MBEAN-$JMX_ATTR:$READING
+    exit 2
+  else
+    if [ $READING -ge $WARN ]; then
+          echo "JMX ATTRIBUTE WARNING" - $JBOSS_MBEAN-$JMX_ATTR:$READING
+          exit 1
+    else
+          echo "JMX ATTRIBUTE OK" - $JBOSS_MBEAN-$JMX_ATTR:$READING
+          exit  0
+    fi
+  fi
+else
+  if [ $READING -le $CRITICAL ]; then
+    echo "JMX ATTRIBUTE CRITICAL" - $JBOSS_MBEAN-$JMX_ATTR:$READING
+    exit 2
+  else
+    if [ $READING -le $WARN ]; then
+          echo "JMX ATTRIBUTE WARNING" - $JBOSS_MBEAN-$JMX_ATTR:$READING
+          exit 1
+    else
+          echo "JMX ATTRIBUTE OK" - $JBOSS_MBEAN-$JMX_ATTR:$READING
+          exit  0
+    fi
+  fi
+fi

@@ -1,0 +1,18 @@
+{
+    "checks": {
+        "swap_IO": {
+            "wiki": "http://wiki.something/for/check/failure",
+            "command": "/etc/sensu/plugins/check-swapio.pl -ww 10 -wc 15 -rw 10 -rc 15",
+            "interval": 60,
+            "occurrences": 5,            
+            "handlers": [
+                "default",
+                "slack",
+                "mailer"
+            ],
+            "subscribers": [
+                "default"
+            ]
+        }
+    }
+}

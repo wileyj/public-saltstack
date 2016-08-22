@@ -1,0 +1,306 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<hudson>
+  <disabledAdministrativeMonitors>
+    <string>hudson.diagnosis.ReverseProxySetupMonitor</string>
+  </disabledAdministrativeMonitors>
+  <version>1.598</version>
+  <numExecutors>4</numExecutors>
+  <mode>NORMAL</mode>
+  <useSecurity>true</useSecurity>
+  <authorizationStrategy class="hudson.security.FullControlOnceLoggedInAuthorizationStrategy"/>
+  <securityRealm class="hudson.security.HudsonPrivateSecurityRealm">
+    <disableSignup>true</disableSignup>
+    <enableCaptcha>false</enableCaptcha>
+  </securityRealm>
+  <disableRememberMe>false</disableRememberMe>
+  <projectNamingStrategy class="jenkins.model.ProjectNamingStrategy$DefaultProjectNamingStrategy"/>
+  <workspaceDir>${JENKINS_HOME}/workspace/${ITEM_FULLNAME}</workspaceDir>
+  <buildsDir>${ITEM_ROOTDIR}/builds</buildsDir>
+  <markupFormatter class="hudson.markup.EscapedMarkupFormatter"/>
+  <jdks>
+    <jdk>
+      <name>Java 8</name>
+      <home>/usr/java/current</home>
+      <properties/>
+    </jdk>
+  </jdks>
+  <viewsTabBar class="hudson.views.DefaultViewsTabBar"/>
+  <myViewsTabBar class="hudson.views.DefaultMyViewsTabBar"/>
+  <clouds/>
+  <slaves>
+    <slave>
+      <name>build1</name>
+      <description>first mac mini</description>
+      <remoteFS>/Users/ixtli/Public/project/</remoteFS>
+      <numExecutors>4</numExecutors>
+      <mode>EXCLUSIVE</mode>
+      <retentionStrategy class="hudson.slaves.RetentionStrategy$Always"/>
+      <launcher class="hudson.plugins.sshslaves.SSHLauncher" plugin="ssh-slaves@1.9">
+        <host>localhost</host>
+        <port>20001</port>
+        <credentialsId>cb53e8ff-eef8-4d06-8308-ed2a16d7b415</credentialsId>
+        <maxNumRetries>0</maxNumRetries>
+        <retryWaitTime>0</retryWaitTime>
+      </launcher>
+      <label>Build1</label>
+      <nodeProperties>
+        <hudson.slaves.EnvironmentVariablesNodeProperty>
+          <envVars serialization="custom">
+            <unserializable-parents/>
+            <tree-map>
+              <default>
+                <comparator class="hudson.util.CaseInsensitiveComparator"/>
+              </default>
+              <int>1</int>
+              <string>JENKINS_NODE_NAME</string>
+              <string>build1</string>
+            </tree-map>
+          </envVars>
+        </hudson.slaves.EnvironmentVariablesNodeProperty>
+      </nodeProperties>
+      <userId>chris</userId>
+    </slave>
+    <slave>
+      <temporaryOfflineCause class="hudson.node_monitors.ResponseTimeMonitor$Data">
+        <past5>
+          <long>-1</long>
+          <long>-1</long>
+          <long>-1</long>
+          <long>-1</long>
+          <long>-1</long>
+        </past5>
+      </temporaryOfflineCause>
+      <name>build0</name>
+      <description>first mac mini</description>
+      <remoteFS>/Users/ixtli/Public/project/</remoteFS>
+      <numExecutors>8</numExecutors>
+      <mode>EXCLUSIVE</mode>
+      <retentionStrategy class="hudson.slaves.RetentionStrategy$Always"/>
+      <launcher class="hudson.plugins.sshslaves.SSHLauncher" plugin="ssh-slaves@1.9">
+        <host>localhost</host>
+        <port>20000</port>
+        <credentialsId>cb53e8ff-eef8-4d06-8308-ed2a16d7b415</credentialsId>
+        <maxNumRetries>0</maxNumRetries>
+        <retryWaitTime>0</retryWaitTime>
+      </launcher>
+      <label>Build1</label>
+      <nodeProperties>
+        <hudson.slaves.EnvironmentVariablesNodeProperty>
+          <envVars serialization="custom">
+            <unserializable-parents/>
+            <tree-map>
+              <default>
+                <comparator class="hudson.util.CaseInsensitiveComparator"/>
+              </default>
+              <int>1</int>
+              <string>JENKINS_NODE_NAME</string>
+              <string>build0</string>
+            </tree-map>
+          </envVars>
+        </hudson.slaves.EnvironmentVariablesNodeProperty>
+      </nodeProperties>
+      <userId>chris</userId>
+    </slave>
+    <slave>
+      <name>build2</name>
+      <description>second mac mini</description>
+      <remoteFS>/Users/ixtli/Public/project/</remoteFS>
+      <numExecutors>4</numExecutors>
+      <mode>EXCLUSIVE</mode>
+      <retentionStrategy class="hudson.slaves.RetentionStrategy$Always"/>
+      <launcher class="hudson.plugins.sshslaves.SSHLauncher" plugin="ssh-slaves@1.9">
+        <host>localhost</host>
+        <port>20002</port>
+        <credentialsId>cb53e8ff-eef8-4d06-8308-ed2a16d7b415</credentialsId>
+        <maxNumRetries>0</maxNumRetries>
+        <retryWaitTime>0</retryWaitTime>
+      </launcher>
+      <label>Build1</label>
+      <nodeProperties>
+        <hudson.slaves.EnvironmentVariablesNodeProperty>
+          <envVars serialization="custom">
+            <unserializable-parents/>
+            <tree-map>
+              <default>
+                <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../../../../../slave/nodeProperties/hudson.slaves.EnvironmentVariablesNodeProperty/envVars/tree-map/default/comparator"/>
+              </default>
+              <int>1</int>
+              <string>JENKINS_NODE_NAME</string>
+              <string>build2</string>
+            </tree-map>
+          </envVars>
+        </hudson.slaves.EnvironmentVariablesNodeProperty>
+      </nodeProperties>
+      <userId>chris</userId>
+    </slave>
+  </slaves>
+  <quietPeriod>5</quietPeriod>
+  <scmCheckoutRetryCount>0</scmCheckoutRetryCount>
+  <views>
+    <hudson.model.AllView>
+      <owner class="hudson" reference="../../.."/>
+      <name>All</name>
+      <description>ß - Asset project tasks&#xd;
+† - Tools build and dist tasks&#xd;
+Ω - Environment deployment tasks&#xd;
+∆ - Analytics build and dist tasks&#xd;
+§ - Dev build/dist tasks (automatically triggered by SCM pushes)&#xd;
+</description>
+      <filterExecutors>false</filterExecutors>
+      <filterQueue>false</filterQueue>
+      <properties class="hudson.model.View$PropertyList"/>
+    </hudson.model.AllView>
+    <listView>
+      <owner class="hudson" reference="../../.."/>
+      <name>Tools</name>
+      <filterExecutors>false</filterExecutors>
+      <filterQueue>false</filterQueue>
+      <properties class="hudson.model.View$PropertyList"/>
+      <jobNames>
+        <comparator class="hudson.util.CaseInsensitiveComparator"/>
+        <string>deploy_web_player_wrapper</string>
+        <string>Tools</string>
+      </jobNames>
+      <jobFilters/>
+      <columns>
+        <hudson.views.StatusColumn/>
+        <hudson.views.WeatherColumn/>
+        <hudson.views.JobColumn/>
+        <hudson.views.LastSuccessColumn/>
+        <hudson.views.LastFailureColumn/>
+        <hudson.views.LastDurationColumn/>
+        <hudson.views.BuildButtonColumn/>
+      </columns>
+      <recurse>false</recurse>
+    </listView>
+    <listView>
+      <owner class="hudson" reference="../../.."/>
+      <name>rpms</name>
+      <filterExecutors>false</filterExecutors>
+      <filterQueue>false</filterQueue>
+      <properties class="hudson.model.View$PropertyList"/>
+      <jobNames>
+        <comparator class="hudson.util.CaseInsensitiveComparator"/>
+      </jobNames>
+      <jobFilters/>
+      <columns>
+        <hudson.views.StatusColumn/>
+        <hudson.views.WeatherColumn/>
+        <hudson.views.JobColumn/>
+        <hudson.views.LastSuccessColumn/>
+        <hudson.views.LastFailureColumn/>
+        <hudson.views.LastDurationColumn/>
+        <hudson.views.BuildButtonColumn/>
+      </columns>
+      <includeRegex>^rpm.*</includeRegex>
+      <recurse>false</recurse>
+    </listView>
+    <listView>
+      <owner class="hudson" reference="../../.."/>
+      <name>Staging</name>
+      <filterExecutors>false</filterExecutors>
+      <filterQueue>false</filterQueue>
+      <properties class="hudson.model.View$PropertyList"/>
+      <jobNames>
+        <comparator class="hudson.util.CaseInsensitiveComparator"/>
+        <string>copy_asset_packs_dev_staging</string>
+        <string>deploy_staging</string>
+        <string>deploy_staging_cache</string>
+        <string>deploy_staging_client</string>
+        <string>deploy_staging_data</string>
+        <string>deploy_staging_server</string>
+      </jobNames>
+      <jobFilters/>
+      <columns>
+        <hudson.views.StatusColumn/>
+        <hudson.views.WeatherColumn/>
+        <hudson.views.JobColumn/>
+        <hudson.views.LastSuccessColumn/>
+        <hudson.views.LastFailureColumn/>
+        <hudson.views.LastDurationColumn/>
+        <hudson.views.BuildButtonColumn/>
+      </columns>
+      <recurse>false</recurse>
+    </listView>
+    <listView>
+      <owner class="hudson" reference="../../.."/>
+      <name>Prod</name>
+      <filterExecutors>false</filterExecutors>
+      <filterQueue>false</filterQueue>
+      <properties class="hudson.model.View$PropertyList"/>
+      <jobNames>
+        <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../listView[3]/jobNames/comparator"/>
+        <string>copy_asset_packs_staging_prod</string>
+        <string>deploy_prod</string>
+        <string>deploy_prod_cache</string>
+        <string>deploy_prod_client</string>
+        <string>deploy_prod_data</string>
+        <string>deploy_prod_server</string>
+      </jobNames>
+      <jobFilters/>
+      <columns>
+        <hudson.views.StatusColumn/>
+        <hudson.views.WeatherColumn/>
+        <hudson.views.JobColumn/>
+        <hudson.views.LastSuccessColumn/>
+        <hudson.views.LastFailureColumn/>
+        <hudson.views.LastDurationColumn/>
+        <hudson.views.BuildButtonColumn/>
+      </columns>
+      <recurse>false</recurse>
+    </listView>
+    <listView>
+      <owner class="hudson" reference="../../.."/>
+      <name>Dev</name>
+      <filterExecutors>false</filterExecutors>
+      <filterQueue>false</filterQueue>
+      <properties class="hudson.model.View$PropertyList"/>
+      <jobNames>
+        <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../listView[3]/jobNames/comparator"/>
+        <string>deploy_dev_cache</string>
+        <string>Dev</string>
+        <string>dev_deploy_assets</string>
+        <string>dev_deploy_client</string>
+        <string>dev_deploy_data</string>
+      </jobNames>
+      <jobFilters/>
+      <columns>
+        <hudson.views.StatusColumn/>
+        <hudson.views.WeatherColumn/>
+        <hudson.views.JobColumn/>
+        <hudson.views.LastSuccessColumn/>
+        <hudson.views.LastFailureColumn/>
+        <hudson.views.LastDurationColumn/>
+        <hudson.views.BuildButtonColumn/>
+      </columns>
+      <recurse>false</recurse>
+    </listView>
+    <listView>
+      <owner class="hudson" reference="../../.."/>
+      <name>Analytics</name>
+      <filterExecutors>false</filterExecutors>
+      <filterQueue>false</filterQueue>
+      <properties class="hudson.model.View$PropertyList"/>
+      <jobNames>
+        <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../listView[3]/jobNames/comparator"/>
+        <string>deploy_celery_tasks</string>
+      </jobNames>
+      <jobFilters/>
+      <columns>
+        <hudson.views.StatusColumn/>
+        <hudson.views.WeatherColumn/>
+        <hudson.views.JobColumn/>
+        <hudson.views.LastSuccessColumn/>
+        <hudson.views.LastFailureColumn/>
+        <hudson.views.LastDurationColumn/>
+        <hudson.views.BuildButtonColumn/>
+      </columns>
+      <recurse>false</recurse>
+    </listView>
+  </views>
+  <primaryView>All</primaryView>
+  <slaveAgentPort>0</slaveAgentPort>
+  <label></label>
+  <nodeProperties/>
+  <globalNodeProperties/>
+</hudson>

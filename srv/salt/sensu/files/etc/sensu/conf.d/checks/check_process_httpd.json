@@ -1,0 +1,19 @@
+{
+    "checks": {
+        "process_httpd": {
+            "command": "/etc/sensu/plugins/check-process.pl -c status -p httpd",
+            "wiki": "http://wiki.something/for/check/failure",
+            "interval": 60,
+            "occurrences": 5,            
+            "handlers": [ 
+                "default",
+                "slack",
+                "mailer"
+            ],
+            "subscribers": [
+                "apache",
+                "webservice"
+            ]
+        }
+    }
+}

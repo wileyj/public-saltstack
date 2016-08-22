@@ -1,0 +1,12 @@
+{
+    "handlers": {
+        "graphite": {
+            "type": "tcp",
+            "socket": {
+                "host": "<%= scope.lookupvar("graphite_host") %>",
+                "port": <%= scope.lookupvar("graphite_port") %>
+            },
+            "mutator": "only_check_output"
+        }
+    }
+}

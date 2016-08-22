@@ -1,0 +1,1 @@
+0 3 * * * (/usr/bin/chkrootkit 2>&1 | mail -s "chkrootkit output" root)

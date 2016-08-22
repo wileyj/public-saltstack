@@ -1,0 +1,18 @@
+{
+    "checks": {
+        "process_denyhosts": {
+            "command": "/etc/sensu/plugins/check-process.pl -c status -p denyhosts",
+            "wiki": "http://wiki.something/for/check/failure",
+            "interval": 60,
+            "occurrences": 5,            
+            "handlers": [ 
+                "default",
+                "slack",
+                "mailer"
+            ],
+            "subscribers": [
+                "default"
+            ]
+        }
+    }
+}

@@ -1,0 +1,18 @@
+{
+    "checks": {
+        "zombie_processes": {
+            "command": "/etc/sensu/plugins/check-process.pl -c status -p sshd",
+            "wiki": "http://wiki.something/for/check/failure",
+            "interval": 60,
+            "occurrences": 5,
+            "handlers": [ 
+                "default",
+                "slack",
+                "mailer" 
+            ],
+            "subscribers": [
+                "default"
+            ]
+        }
+    }
+}

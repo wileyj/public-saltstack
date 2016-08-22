@@ -1,0 +1,22 @@
+{% set os_map = salt['grains.filter_by']({
+
+	'Debian': {
+		'pkg': 'auditd',
+		'config': '/etc/default/auditd',
+		'service': 'auditd'
+	},
+
+	'RedHat': {
+		'pkg': 'audit',
+		'config': '/etc/sysconfig/auditd',
+		'service': 'auditd'
+	}
+
+}, merge=salt['pillar.get']('audit:lookup')) %}
+
+{% import_yaml 'audit/defaults.yaml' as default_settings %}
+
+{% do default_settings.audit.update(os_map) %}
+
+{% set audit = salt['pillar.get']('audit', default=default_settings.audit, merge=True) %}
+

@@ -1,0 +1,16 @@
+{
+    "checks": {
+        "writable_tmp": {
+            "command": "/etc/sensu/plugins/check-fs-writable.rb -d /tmp",
+            "wiki": "http://wiki.something/for/check/failure",
+            "interval": 60,
+            "handlers": [ 
+                "default",
+                "slack" 
+            ],
+            "subscribers": [
+                "default"
+            ]
+        }
+    }
+}

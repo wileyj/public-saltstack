@@ -1,0 +1,16 @@
+{
+    "client": {
+        "name": "<%= scope.lookupvar('hostname_full') %>",
+        "address": "<%= scope.lookupvar('ipaddress') %>",
+        "keepalive": {
+            "thresholds": {
+                "warning": <%= scope.lookupvar('client_warning') %>,
+                "critical": <%= scope.lookupvar('client_critical') %>
+            },
+            "refresh":  <%= scope.lookupvar('client_refresh') %>
+        },
+        "subscriptions":        <%= scope.lookupvar('client_subscriptions') %>
+    }
+}
+
+

@@ -1,0 +1,1 @@
+0 2 * * * root if [ `ls /var/spool/clientmqueue | wc -l` -gt 0 ]; then /bin/rm -rf /var/spool/clientmqueue/* > /dev/null 2>&1; fi

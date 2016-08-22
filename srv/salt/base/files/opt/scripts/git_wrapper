@@ -1,0 +1,123 @@
+#!/bin/sh
+export TZ=America/New_York
+export PATH=${PATH}:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
+
+GIT_DIR="/var/tmp"
+GIT_KEY="/opt/scripts/git_key"
+SCRIPT_DIR="/opt/scripts"
+GIT_USER="dev-ops" # placeholder for future use, right now the only key being used is attached to this username in github
+SSH_KEY="/root/.ssh/github_id_rsa"
+REPO_OWNER="repoowner"
+
+while getopts ":r:f:n:s:a:" opt; do
+    case $opt in
+        "r")
+            REPO_NAME=${OPTARG}
+            REPO_URL="git@github.com:/${REPO_OWNER}/${REPO_NAME}.git"
+            echo "-r was triggered for REPO:: Parameter: $OPTARG" >&2
+            ;;
+        "f")
+            FOLDER=${OPTARG}
+            echo "-f was triggered for FOLDER:: Parameter: $OPTARG" >&2
+            ;;
+        "n")
+            NAME=${OPTARG}
+            echo "-n was triggered for NAME:: Parameter: $OPTARG" >&2
+            ;;
+        "s")
+            SCRIPT=${OPTARG}
+            echo "-s was triggered for SCRIPT:: Parameter: $OPTARG" >&2
+            ;;
+        "a")
+            SCRIPT_ARGS=${OPTARG}
+            echo "-a was triggered for ARGS:: Parameter: $OPTARG" >&2
+            ;;
+        \?)
+            echo "Invalid option: -$OPTARG" >&2
+            exit 1
+            ;;
+        :)
+            echo "Option -$OPTARG requires an argument." >&2
+            exit 1
+        ;;
+    esac
+done
+REPO_DIR="${GIT_DIR}/${REPO_NAME}"
+LINKSOURCE="${REPO_DIR}/${FOLDER}"
+LINKTARGET="${SCRIPT_DIR}/${NAME}"
+
+help(){
+    echo ""
+    echo "$0 <Repo Name> <Repo Folder> <Project Name> <Script - relative to repo folder path > \"<Script Args>\""
+    echo "\t ex: $0 \ "
+    echo "\t\t -r Repo \ "
+    echo "\t\t -f Folder1/Folder \ "
+    echo "\t\t -n Name \ "
+    echo "\t\t -s script.py \ "
+    echo "\t\t -a \"command-line args\" "
+    echo ""
+    echo ""
+    exit 1
+}
+
+if [ -z "${REPO_NAME}" ];then
+    echo "Missing Required Arg '-r' for git repository name"
+    echo ""
+    help
+elif [ -z "${FOLDER}" ];then
+    echo "Missing Required Arg '-f' for git folder"
+    echo ""
+    help
+elif [ -z "${NAME}" ];then
+    echo "Missing Required Arg '-n' for project name"
+    echo ""
+    help
+elif [ -z "${SCRIPT}" ]; then
+    echo "Missing Required Arg '-s' for script to exec"
+    echo ""
+    help
+else
+    if [ \( -f ${GIT_KEY} \) -a \( -f ${SSH_KEY} \) ]; then
+        if [ ! -d "${LINKSOURCE}" ];then
+            ${GIT_KEY} -i ${SSH_KEY}  -C ${GIT_DIR} clone ${REPO_URL}
+            if [ $? -ne 0 ];then
+                echo "Failure Cloning ${REPO_URL}"
+                exit 2
+            fi
+        fi
+        ${GIT_KEY} -i ${SSH_KEY}  -C ${REPO_DIR} reset --hard master
+        ${GIT_KEY} -i ${SSH_KEY} -C ${REPO_DIR} clean -f -d
+        ${GIT_KEY} -i ${SSH_KEY} -C ${REPO_DIR} pull origin master
+        if [ \( ${LINKSOURCE} \) -a \( ${LINKTARGET} \)  ];then
+            if [ -d "${LINKSOURCE}" ];then
+                if [ ! -L "${LINKTARGET}" ]; then
+                    echo "Running ln -s ${LINKSOURCE} ${LINKTARGET}"
+                    ln -s ${LINKSOURCE} ${LINKTARGET}
+                fi
+            else
+                echo "Error Creating the symlink, ${LINKSOURCE} doesn't exist"
+                exit 12
+           fi
+        fi
+        if [ -f "${LINKTARGET}/${SCRIPT}" ];then
+            chmod 755 ${LINKTARGET}/${SCRIPT}
+            echo "Running: ${LINKTARGET}/${SCRIPT} ${SCRIPT_ARGS}"
+            ${LINKTARGET}/${SCRIPT} ${SCRIPT_ARGS}
+        else
+            echo "Missing Script ${LINKTARGET}/${SCRIPT}"
+        fi
+    else
+        if [ ! -f ${GIT_KEY} ]; then
+            echo "Missing required file: ${GIT_KEY}"
+            echo "**********************************"
+            exit 11
+        fi
+        if [ ! -f ${SSH_KEY} ]; then
+            echo "Missing required file: ${SSH_KEY}"
+            echo "**********************************"
+            exit 12
+        fi
+
+    fi
+fi
+exit 0

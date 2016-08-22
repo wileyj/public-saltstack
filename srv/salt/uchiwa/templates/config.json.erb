@@ -1,0 +1,26 @@
+{
+    "sensu": [<% datacenters = scope.lookupvar('uchiwa_app_datacenters').length %><% scope.lookupvar('uchiwa_app_datacenters').each_pair do |key, value| %><% datacenters=datacenters - 1 %>{
+            "name": "<%= key %>",
+            "host": "<%= value['node'] %>",
+            "ssl":  <%= scope.lookupvar('sensu_use_ssl') %>,
+            "port": <%= scope.lookupvar('api_port') %>,
+            "user": "<%= scope.lookupvar('api_user') %>",
+            "pass": "<%= scope.lookupvar('api_password') %>",
+            "path": "<%= scope.lookupvar('sensu_path') %>",
+            "timeout": <%= scope.lookupvar('sensu_timeout') %>
+    }<%= ',' if (datacenters > 0) %><% end %>],
+    "uchiwa": {
+        "user": "<%= scope.lookupvar('uchiwa_admin_user') %>",
+        "pass": "<%= scope.lookupvar('uchiwa_admin_password') %>",
+        "port": <%= scope.lookupvar('uchiwa_port') %>,
+        "stats": <%= scope.lookupvar('uchiwa_stats') %>,
+        "refresh": <%= scope.lookupvar('uchiwa_refresh') %>,
+        "users":[<% users = scope.lookupvar('uchiwa_app_users').length %><% scope.lookupvar('uchiwa_app_users').each_pair do |key, value| %>{<% users=users - 1 %>
+            "username" : "<%= key %>",
+            "password" : "<%= value['password'] %>",
+            "role" : {
+                "readonly": <%= value['readonly'] %>
+            }
+        }<%= ',' if (users  > 0) %><% end %>]
+    }
+}

@@ -1,0 +1,108 @@
+#!/bin/bash
+
+# chkconfig: 345 87 87
+# description: transfer-logs
+
+### BEGIN INIT INFO
+# Provides:       transfer-logs
+# Required-Start: $remote_fs $network
+# Required-Stop:  $remote_fs $network
+# Default-Start:  2 3 4 5
+# Default-Stop:   0 1 6
+# Description:    transfer-logs
+### END INIT INFO
+#
+
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+LOG="/var/log/transfer.log"
+set -e
+export PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+OP=$1
+SLOTS="/var/log/tomcat8/slots"
+RETVAL=0
+DATE=`date +%m-%d-%y-%H-%M`
+HOST=`hostname`
+LOCKFILE="/var/lock/subsys/transfer-logs"
+ENV=`/usr/bin/facter -p tag_beanstalk_name | cut -f2 -d"-"`
+S3="s3://logsbucket-${ENV}/"
+RANDOM=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+#ENV=`/usr/bin/facter -p tag_environment`
+
+
+stop() {
+    echo "" > $LOG
+    echo "********************************" >> $LOG
+    echo `date` >> /var/log/transfer.log
+    echo "Environment: $ENV" >> $LOG
+    echo -n $"Shutting down $0 "
+    if [ -d "$SLOTS" ]; then
+        for file in `ls $SLOTS`; do  
+            echo "checking $SLOTS/$file" >> $LOG
+            SIZE=`wc -c $SLOTS/$file | cut -f1 -d " "`
+            echo "$SLOTS/$file SIZE: $SIZE" >> $LOG
+            if [ $SIZE -gt 0 ]; then
+                NEWFILE=""
+                if [[ $file =~ \.gz$ ]]; then
+                    echo "Found gz file, copying to S3: aws s3 cp $SLOTS/$file $S3" >> $LOG
+                    aws s3 cp $SLOTS/$file $S3
+                    if [ $? -eq "0" ];then
+                        rm -f $SLOTS/$file
+                    fi
+                else
+                    PREFIX=`echo $file | cut -d "." -f1`
+                    SUFFIX=`echo $file | cut -d "." -f2`
+                    echo "PREFIX: $PREFIX" >> $LOG
+                    echo "SUFFIX: $SUFFIX" >> $LOG
+                    if [ $SUFFIX == "log" ]; then
+                        echo "FOUND 'log' suffix" >> $LOG
+                        NEWFILE="$SLOTS/$PREFIX.$DATE.$HOST.log"
+                    else
+                        NEWFILE="$SLOTS/$PREFIX.$SUFFIX.$DATE.$HOST.log"
+                    fi
+                    echo "Moving file: mv $SLOTS/$file $NEWFILE" >> $LOG
+                    mv $SLOTS/$file $NEWFILE
+                    gzip $NEWFILE
+                    echo "Copying to s3: aws s3 cp ${NEWFILE}.gz $S3"  >> $LOG
+                    aws s3 cp ${NEWFILE}.gz $S3
+                    if [ $? -eq "0" ];then
+                        rm -f ${NEWFILE}.gz
+                    fi
+                fi
+            fi
+        done
+    fi
+    return 0
+}
+
+if [ $ENV == "production" ];then
+    case "$OP" in
+        start)
+            if [ ! -f "$LOCKFILE" ]
+            then
+                /bin/touch $LOCKFILE
+            fi
+            echo -n $"Starting $0 "
+            RETVAL=0
+        ;;
+        status)
+            if [ ! -f "$LOCKFILE" ]
+            then
+                /bin/touch $LOCKFILE
+            fi
+            echo -n $"Status $0 "
+            RETVAL=0
+        ;;
+        stop)
+            if [ -f "$LOCKFILE" ]
+            then
+                /bin/rm -f $LOCKFILE
+            fi
+            stop
+        ;;
+        *)
+            start
+    esac
+fi
+exit $RETVAL

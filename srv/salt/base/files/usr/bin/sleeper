@@ -1,0 +1,21 @@
+#!/usr/bin/perl -w
+use strict;
+
+if (!$ARGV[0])
+{
+  print "USAGE: sleeper RUNTIME_MAX_DELAY MULTIPLIER(60)\nRUNTIME_MAX_DELAY: Maximum Minutes (usually) to delay\nMULTIPLIER: Multiplier (defaults to 60 for minutes)\n";
+  exit 1;
+}
+
+my $RUNTIME_DELAY = $ARGV[0];
+my $MULTIPLIER = 60;
+if ($ARGV[1])
+{
+  $MULTIPLIER = $ARGV[1];
+}
+
+my $wait = int(rand($RUNTIME_DELAY)*$MULTIPLIER);
+
+print "Sleeping for: $wait seconds ....\n";
+
+sleep $wait;

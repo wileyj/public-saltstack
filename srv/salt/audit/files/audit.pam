@@ -1,0 +1,5 @@
+# === Added by Salt [audit.pam] [BEGIN] ===
+# unique uid
+session required     pam_loginuid.so
+session include      common-session
+# === Added by Salt [audit.pam] [END]   ===

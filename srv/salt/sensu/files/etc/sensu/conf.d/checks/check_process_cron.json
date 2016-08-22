@@ -1,0 +1,18 @@
+{
+    "checks": {
+        "process_cron": {
+            "command": "/etc/sensu/plugins/check-process.pl -c count -p crond -W 0 -C 0 -r",
+            "wiki": "http://wiki.something/for/check/failure",
+            "interval": 60,
+            "occurrences": 5,            
+            "handlers": [ 
+				"default",
+                "slack",
+                "mailer"
+			],
+			"subscribers": [
+				"default"
+			]
+    	}
+  	}
+}

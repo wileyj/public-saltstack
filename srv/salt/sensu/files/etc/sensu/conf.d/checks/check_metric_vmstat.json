@@ -1,0 +1,12 @@
+{
+    "checks": {
+        "vmstat_metric": {
+            "type": "metric",
+            "handlers": ["graphite_line_tcp"],
+            "command": "/etc/sensu/metrics/metrics-vmstat.rb --scheme stats",
+            "auto_tag_host": "yes",
+            "interval": 60,
+            "subscribers": ["metrics"]
+        }
+    }
+}
