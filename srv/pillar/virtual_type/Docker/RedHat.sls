@@ -1,0 +1,3 @@
+packages:
+    virt:
+        - docker-init

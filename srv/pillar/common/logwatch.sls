@@ -1,2 +1,0 @@
-logwatch:
-  mailto: 'root@localhost'

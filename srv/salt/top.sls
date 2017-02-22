@@ -1,31 +1,71 @@
-# https://docs.saltstack.com/en/latest/ref/states/top.html
+{% set virt      = grains['virtual_subtype'] | default(None)  %}
+{% set os_family = grains['os_family']       | default(None)  %}
+{% set environment = grains['instance']['environment'] | default(None) %}
+{% set role = grains['instance']['role'] | default(None) %}
 
+{% if environment and environment == 'prod' %}
+    {% set file_root = "/srv/salt" %}
+{% elif environment and environment == "staging" %}
+    {% set file_root = "/srv/salt" %}
+{% elif environment and environment == "dev" %}
+    {% set file_root = "/srv/salt" %}
+{% else %}
+    {% set file_root = "/srv/salt" %}
+{% endif %}
 file_roots:
-  dev:
-    - /srv/salt
-  qa:
-    - /srv/salt
-  prod:
-    - /srv/salt
+    dev:
+        - {{ file_root }}
+    qa:
+        - {{ file_root }}
+    prod:
+        - {{ file_root }}
 
 base:
-  '*':
-    - base
-    - python
-    - resolver
-    - limits
-    - sysctl
-    - logrotate.jobs
-    - denyhosts
-    - harden
-  {% set roles = salt['grains.get']('roles',[]) -%}
-  {% for role in roles -%}
-  {% set states = salt['pillar.get']('states:'+role,[]) -%}
-  {% if states -%}
-  'roles:{{ role }}':
-    - match: grain
-    {% for state in states -%}
-    - roles.{{ state }}
-    {% endfor -%}
-  {% endif -%}
-  {% endfor -%}
+    '*':
+        - resolver
+        - repo
+        - base
+        - python
+        - limits
+        - application
+{% if virt == 'Docker' and os_family == 'RedHat' %}
+        - runit
+{% endif %}
+{% if virt != 'Docker' %}
+        - sysctl
+        - logrotate.jobs
+        #- harden
+{% endif %}
+        - cleanup.{{ virt }}
+
+
+
+# file_roots:
+#   dev:
+#     - /srv/salt
+#   qa:
+#     - /srv/salt
+#   prod:
+#     - /srv/salt
+#
+# base:
+#   '*':
+#     - base
+#     - python
+#     - resolver
+#     - limits
+#     - sysctl
+#     - logrotate.jobs
+#     - denyhosts
+#     - harden
+#   {% set roles = salt['grains.get']('roles',[]) -%}
+#   {% for role in roles -%}
+#   {% set states = salt['pillar.get']('states:'+role,[]) -%}
+#   {% if states -%}
+#   'roles:{{ role }}':
+#     - match: grain
+#     {% for state in states -%}
+#     - roles.{{ state }}
+#     {% endfor -%}
+#   {% endif -%}
+#   {% endfor -%}

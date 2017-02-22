@@ -973,16 +973,16 @@ return: local_cache
 
 
 nodegroups:
-  prod:  'G@ec2-data:ec2-tags:environment:production'
-  production:  'G@ec2-data:ec2-tags:environment:production'
-  qa: 'G@ec2-data:ec2-tags:environment:qa'
-  dev: 'G@ec2-data:ec2-tags:environment:dev'
-  stg: 'G@ec2-data:ec2-tags:environment:staging'
-  staging: 'G@ec2-data:ec2-tags:environment:staging'
+  prod:  'G@instance:ec2-tags:environment:production'
+  production:  'G@instance:ec2-tags:environment:production'
+  qa: 'G@instance:ec2-tags:environment:qa'
+  dev: 'G@instance:ec2-tags:environment:dev'
+  stg: 'G@instance:ec2-tags:environment:staging'
+  staging: 'G@instance:ec2-tags:environment:staging'
   master: 'puppet-master-001.core.use1.domain.com'
   test: 'platform-test-001.core.use1.domain.com'
-  client: 'G@ec2-data:ec2-tags:role:*'
-  rabbit: 'G@ec2-data:ec2-tags:role:rabbitmq'
+  client: 'G@instance:ec2-tags:role:*'
+  rabbit: 'G@instance:ec2-tags:role:rabbitmq'
   all: 'G@roles:*'
 
 

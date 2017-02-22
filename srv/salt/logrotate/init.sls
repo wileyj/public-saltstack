@@ -3,10 +3,12 @@
 logrotate:
   pkg.installed:
     - name: {{ logrotate.pkg|json }}
+{% if grains['virtual_subtype'] != 'Docker' %}
   service.running:
     - name: {{ logrotate.service }}
     - enable: True
     - reload: True
+{% endif %}
 
 logrotate_directory:
   file.directory:
@@ -17,4 +19,3 @@ logrotate_directory:
     - makedirs: True
     - require:
       - pkg: logrotate
-
