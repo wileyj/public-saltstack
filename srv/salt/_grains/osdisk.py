@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import os
-
+import logging
+log = logging.getLogger(__name__)
 def get_osdisk_stats():
     '''
     Calculates and returns the disk used, available and total capacity
@@ -10,11 +11,14 @@ def get_osdisk_stats():
     grains = {}
     grains['osdisk'] = {}
     disk = os.statvfs("/")
-
+    log.debug("Collecting Disk Stats")
+    log.debug("\t - os.statvfs: %s" % (disk))
     capacity = disk.f_bsize * disk.f_blocks
+    log.debug("\t - disk capacity %s" % (capacity))
     available = disk.f_bsize * disk.f_bavail
+    log.debug("\t - disk available: %s" % (available))
     used = disk.f_bsize * (disk.f_blocks - disk.f_bavail)
-
+    log.debug("\t - disk used: %s" % (used))
     # print information in bytes
     #print used, available, capacity
     # print information in Kilobytes
@@ -23,9 +27,11 @@ def get_osdisk_stats():
     #print used/1.048576e6, available/1.048576e6, capacity/1.048576e6
     # print information in Gigabytes
     #print used/1.073741824e9, available/1.073741824e9, capacity/1.073741824e9
-
+    log.debug("Setting grains values")
     grains['osdisk']['used'] = int(round(used/1.073741824e9))
     grains['osdisk']['available'] = int(round(available/1.073741824e9))
     grains['osdisk']['capacity'] = int(round(capacity/1.073741824e9))
-
+    log.debug("osdisk.used: %i" % (int(round(used/1.073741824e9))))
+    log.debug("osdisk.available: %i" % (int(round(available/1.073741824e9))))
+    log.debug("osdisk.capacity: %i" % (int(round(capacity/1.073741824e9))))
     return grains

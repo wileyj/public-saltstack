@@ -16,8 +16,10 @@ logrotate_{{key}}:
     - mode: {{ salt['pillar.get']('logrotate:config:mode', '644') }}
     - require:
       - pkg: logrotate
+{% if grains['virtual_subtype'] != 'Docker' %}
     - watch_in:
       - service: {{ logrotate.service }}
+{% endif %}
     - context:
       {% if value is mapping %}
       path: {{ value.get('path', []) }}

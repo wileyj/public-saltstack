@@ -1,3 +1,4 @@
+# python:init
 include:
-  - python.packages
-  - python.modules
+    - python.packages
+    - python.modules

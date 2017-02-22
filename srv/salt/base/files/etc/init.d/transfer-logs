@@ -20,7 +20,7 @@ LOG="/var/log/transfer.log"
 set -e
 export PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 OP=$1
-SLOTS="/var/log/tomcat8/slots"
+SLOTS="/var/log/tomcat8/"
 RETVAL=0
 DATE=`date +%m-%d-%y-%H-%M`
 HOST=`hostname`
@@ -38,7 +38,7 @@ stop() {
     echo "Environment: $ENV" >> $LOG
     echo -n $"Shutting down $0 "
     if [ -d "$SLOTS" ]; then
-        for file in `ls $SLOTS`; do  
+        for file in `ls $SLOTS`; do
             echo "checking $SLOTS/$file" >> $LOG
             SIZE=`wc -c $SLOTS/$file | cut -f1 -d " "`
             echo "$SLOTS/$file SIZE: $SIZE" >> $LOG

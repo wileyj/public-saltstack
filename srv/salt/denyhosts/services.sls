@@ -1,4 +1,4 @@
-denyhosts:
+denyhosts services:
   service.running:
     - enable: True
     - reload: True

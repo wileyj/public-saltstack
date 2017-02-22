@@ -1,0 +1,2 @@
+os:
+    name: Amazon Linux

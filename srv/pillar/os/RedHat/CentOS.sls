@@ -1,0 +1,3 @@
+os:
+    name: CentOS
+    

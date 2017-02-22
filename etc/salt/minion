@@ -389,7 +389,7 @@ conf_file: /etc/salt/minion
 
 # The syndic minion can verify that it is talking to the correct master via the
 # key fingerprint of the higher-level master with the "syndic_finger" config.
-syndic_finger: '9e:f8:af:73:e4:f5:c4:d8:3c:31:21:d8:52:43:26:d2:c5:02:d4:2a:fd:ef:10:cd:f8:31:2e:3c:fe:cb:e9:65'
+syndic_finger: ''
 #
 #
 #
