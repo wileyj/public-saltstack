@@ -1,4 +1,4 @@
-# role init
+# role.init
 {% set role = pillar['role'] | default(None) %}
 {% set instance = grains['instance'] | default(None) %}
 {% if role and instance %}
@@ -13,7 +13,7 @@
     {% if instance_application and instance_role  %}
         - role/{{ instance_application }}.{{ instance_role }}
     {% endif %}
-    {% if newrelic_packages and newrelic_enabled == true %}
+    {% if newrelic and newrelic_packages and newrelic_enabled == true %}
         - source_install.newrelic
     {% endif %}
 {% endif %}

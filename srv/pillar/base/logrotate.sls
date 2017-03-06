@@ -1,4 +1,4 @@
-# https://github.com/saltstack-formulas/logrotate-formula/blob/master/pillar.example
+# base.logrotate
 logrotate:
   lookup:
     pkg: logrotate

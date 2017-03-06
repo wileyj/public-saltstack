@@ -1,4 +1,4 @@
-# role:ops:sensu
+# role.ops.sensu
 role:
     newrelic:
         enabled: false

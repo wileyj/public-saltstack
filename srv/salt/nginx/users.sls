@@ -1,4 +1,4 @@
-# nginx:users
+# nginx.users
 nginx user creation:
   user.present:
     - fullname: Nginx

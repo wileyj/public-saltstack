@@ -1,3 +1,4 @@
+# base.packages
 packages:
     apache: httpd
     git: git

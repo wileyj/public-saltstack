@@ -1,3 +1,3 @@
-# environment:dev
+# environment.dev
 environment:
     name: dev

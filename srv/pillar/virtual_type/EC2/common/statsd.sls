@@ -1,3 +1,4 @@
+# virtual_type.EC2.common.statsd
 statsd:
   config:
     port: 8125

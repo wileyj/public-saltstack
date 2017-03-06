@@ -1,3 +1,4 @@
+# virtual_type.EC2.common.audit
 audit:
 
   ## Default settings for the audit daemon

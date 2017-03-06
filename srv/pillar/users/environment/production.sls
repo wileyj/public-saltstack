@@ -1,4 +1,4 @@
-# users:environment:production
+# users.environment.production
 environment:
     users:
     groups:

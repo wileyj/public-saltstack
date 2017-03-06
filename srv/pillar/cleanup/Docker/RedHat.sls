@@ -1,3 +1,4 @@
+# cleanup.Docker.RedHat
 os_cleanup:
     packages:
         - libx11-common

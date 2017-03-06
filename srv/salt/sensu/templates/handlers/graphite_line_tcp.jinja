@@ -1,0 +1,12 @@
+{
+    "handlers": {
+        "graphite_line_tcp": {
+            "type": "tcp",
+            "socket": {
+                "host": "{{ pillar['sensu']['graphite']['host'] }}",
+                "port": {{ pillar['sensu']['graphite']['port'] }}
+            },
+            "mutator": "only_check_output"
+        }
+    }
+}

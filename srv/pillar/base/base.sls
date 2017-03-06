@@ -1,2 +1,3 @@
-company: Comapny
-domain: company.com
+# base.base
+company: company
+domain: local.com

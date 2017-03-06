@@ -1,0 +1,4 @@
+#! /bin/sh
+# apache default; we typically will override this with out application specific stuff
+exec 2>&1
+/usr/sbin/apache2 -D FOREGROUND

@@ -1,3 +1,4 @@
+# base.ntp
 ntp:
   servers:
     - 0.amazon.pool.ntp.org

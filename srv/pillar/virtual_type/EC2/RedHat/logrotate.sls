@@ -1,4 +1,4 @@
-# https://github.com/saltstack-formulas/logrotate-formula/blob/master/pillar.example
+# virtual_type.EC2.RedHat.logrotate
 logrotate:
     yum:
       path:

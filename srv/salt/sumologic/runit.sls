@@ -1,4 +1,4 @@
-# varnish:runit
+# sumologic.runit
 sumologic runit dir:
     file.directory:
         - name: /etc/service/sumologic

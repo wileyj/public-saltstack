@@ -1,3 +1,4 @@
+# base.packages
 {% set os_family = grains['os_family'] | default(None) %}
 {% set packages = pillar['packages'] | default(None) %}
 {% if packages %}

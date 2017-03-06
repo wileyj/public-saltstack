@@ -1,3 +1,4 @@
+# role.users
 {% set role = pillar['role'] | default(None) %}
 {% if role %}
 {% set users = pillar['role']['users'] | default(None) %}
@@ -12,6 +13,9 @@ role user - {{ key }}:
     {% if val['home'] is defined %}
         - home: {{ val['home'] }}
     {% endif %}
+    {% if val['system'] is defined %}
+        - system: {{ val['system'] }}
+    {% endif %}
     {% if val['createhome'] is defined %}
         - createhome: {{ val['createhome'] }}
     {% endif %}
@@ -24,7 +28,9 @@ role user - {{ key }}:
 role groups - {{ key}}:
     group.present:
         - name: {{ val['name'] }}
+    {% if val['system'] is defined %}
         - system: {{ val['system'] }}
+    {% endif %}
         - gid: {{ val['gid'] }}
     {% if val['addusers'] is defined %}
         - members:

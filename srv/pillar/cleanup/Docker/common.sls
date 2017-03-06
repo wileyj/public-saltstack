@@ -1,3 +1,4 @@
+# cleanup.Docker.common
 common_cleanup:
     packages:
         - automake

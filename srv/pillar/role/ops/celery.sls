@@ -1,4 +1,4 @@
-# role:ops:celery
+# role.ops.celery
 role:
     newrelic:
         enabled: false

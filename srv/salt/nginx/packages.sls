@@ -1,4 +1,4 @@
-# nginx:packages
+# nginx.packages
 nginx packages:
     pkg.installed:
         - refresh: True

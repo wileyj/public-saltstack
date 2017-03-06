@@ -1,3 +1,4 @@
+# virtual_type.EC2.common.denyhosts
 denyhosts:
   hosts_deny: /etc/hosts.deny
   block_service: all
@@ -17,7 +18,7 @@ denyhosts:
   age_reset_invalid: 10d
   reset_on_success: true
   reset_valid: 2d
-  deny_threshold: 
+  deny_threshold:
     invalid: 5
     valid: 5
     root: 1

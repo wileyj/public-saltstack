@@ -1,4 +1,4 @@
-# source_install:openscad
+# source_install.openscad
 {% if pillar['role'] is defined and pillar['application'] is defined and grains['instance'] is defined %}
     {% set openscad_version        = pillar['role']['openscad_version'] | default(None) %}
     {% set openscad_version_short  = pillar['role']['openscad_version_short'] | default(None) %}
@@ -9,16 +9,18 @@
     {% set role                    = grains['instance']['role'] | default(None) %}
     {% set application_users       = pillar['application']['users'] | default(None) %}
     {% set application_groups      = pillar['application']['groups'] | default(None) %}
-
-    {% if role_users and role_groups %}
-        {% set owner_user          = pillar['role']['users'][grains['instance']['role']]['name'] %}
-        {% set owner_group         = pillar['role']['groups'][grains['instance']['role']]['name'] %}
-    {% elif application_users and application_groups %}
-        {% set owner_user          = pillar['application']['users'][grains['instance']['application']]['name'] %}
-        {% set owner_group         = pillar['application']['groups'][grains['instance']['application']]['name'] %}
-    {% else %}
-        {% set owner_user          = 'root' %}
-        {% set owner_group         = 'root' %}
+    {% set owner_group        = 'root' %}
+    {% if application and application_users and application_groups %}
+        {% set owner_user = pillar['application']['users'][grains['instance']['application']]['name'] | default('root') %}
+        {% set owner_group = pillar['application']['groups'][grains['instance']['application']]['name'] | default('root') %}
+        {% set application_user = pillar['application']['users'][grains['instance']['application']]['name'] | default(owner_user) %}
+        {% set application_group = pillar['application']['groups'][grains['instance']['application']]['name'] | default(owner_group) %}
+    {% endif %}
+    {% if role and role_users and role_groups %}
+        {% set owner_user = pillar['role']['users'][grains['instance']['role']]['name'] | default('root') %}
+        {% set owner_group = pillar['role']['groups'][grains['instance']['role']]['name'] | default('root') %}
+        {% set role_user = pillar['role']['users'][grains['instance']['role']]['name'] | default(owner_user) %}
+        {% set role_group = pillar['role']['groups'][grains['instance']['role']]['name'] | default(owner_group) %}
     {% endif %}
 
     {% if openscad_version and openscad_version_short and openscad_version_dl_url %}
@@ -54,8 +56,8 @@
             file.directory:
                 - name: /usr/local/share/openscad
                 - name: /usr/local/share/openscad
-                - user: {{ owner_user }}
-                - group: {{ owner_group }}
+                - user: {{ application_user }}
+                - group: {{ application_group }}
                 - mode: 0755
 
         source_install openscad dir copy - /usr/local/share/openscad/libraries:

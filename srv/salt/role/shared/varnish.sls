@@ -1,3 +1,3 @@
-# role:shared:admin
+# role.shared.varnish
 include:
     - varnish
