@@ -1,4 +1,4 @@
-# varnish:init
+# squid.init
 include:
     - varnish.files
 {% if grains['virtual_subtype'] == 'Docker' %}
