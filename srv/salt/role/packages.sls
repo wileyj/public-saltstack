@@ -1,3 +1,4 @@
+# role.packages
 {% set role = pillar['role'] | default(None) %}
 {% if role %}
 {% set packages = pillar['role']['packages'] | default(None) %}
