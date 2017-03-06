@@ -1,3 +1,4 @@
+# base.users
 # sensu:
 #   user.present:
 #     - fullname: Sensu

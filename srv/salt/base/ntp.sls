@@ -1,3 +1,4 @@
+# base.ntp
 {% set ntp = pillar['ntp'] | default(None) %}
 {% if ntp %}
     {% set servers = pillar['ntp']['servers'] | default(None) %}
@@ -19,7 +20,7 @@
           - file: /etc/ntp.conf
       file.managed:
         - name: /etc/ntp.conf
-        - source: salt://base/templates/ntp.conf.j2
+        - source: salt://base/templates/ntp.conf.jinja
         - mode: 644
         - template: jinja
         - defaults:

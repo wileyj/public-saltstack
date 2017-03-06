@@ -1,3 +1,4 @@
+# base.groups
 # sensu:
 #   group.present:
 #     - gid: 419

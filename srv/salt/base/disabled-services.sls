@@ -1,3 +1,4 @@
+# base.disabled-services
 apcid:
   service:
     - dead
@@ -166,7 +167,9 @@ ypbind:
   service:
     - dead
     - enable: False
+{% if grains['os_family'] == 'RedHat' %}
 yum-updatesd:
   service:
     - dead
     - enable: False
+{% endif %}

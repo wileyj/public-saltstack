@@ -20,7 +20,7 @@ LOG="/var/log/transfer.log"
 set -e
 export PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 OP=$1
-SLOTS="/var/log/tomcat8/"
+LOGS="/var/log/tomcat8/app"
 RETVAL=0
 DATE=`date +%m-%d-%y-%H-%M`
 HOST=`hostname`
@@ -37,18 +37,18 @@ stop() {
     echo `date` >> /var/log/transfer.log
     echo "Environment: $ENV" >> $LOG
     echo -n $"Shutting down $0 "
-    if [ -d "$SLOTS" ]; then
-        for file in `ls $SLOTS`; do
-            echo "checking $SLOTS/$file" >> $LOG
-            SIZE=`wc -c $SLOTS/$file | cut -f1 -d " "`
-            echo "$SLOTS/$file SIZE: $SIZE" >> $LOG
+    if [ -d "$LOGS" ]; then
+        for file in `ls $LOGS`; do
+            echo "checking $LOGS/$file" >> $LOG
+            SIZE=`wc -c $LOGS/$file | cut -f1 -d " "`
+            echo "$LOGS/$file SIZE: $SIZE" >> $LOG
             if [ $SIZE -gt 0 ]; then
                 NEWFILE=""
                 if [[ $file =~ \.gz$ ]]; then
-                    echo "Found gz file, copying to S3: aws s3 cp $SLOTS/$file $S3" >> $LOG
-                    aws s3 cp $SLOTS/$file $S3
+                    echo "Found gz file, copying to S3: aws s3 cp $LOGS/$file $S3" >> $LOG
+                    aws s3 cp $LOGS/$file $S3
                     if [ $? -eq "0" ];then
-                        rm -f $SLOTS/$file
+                        rm -f $LOGS/$file
                     fi
                 else
                     PREFIX=`echo $file | cut -d "." -f1`
@@ -57,12 +57,12 @@ stop() {
                     echo "SUFFIX: $SUFFIX" >> $LOG
                     if [ $SUFFIX == "log" ]; then
                         echo "FOUND 'log' suffix" >> $LOG
-                        NEWFILE="$SLOTS/$PREFIX.$DATE.$HOST.log"
+                        NEWFILE="$LOGS/$PREFIX.$DATE.$HOST.log"
                     else
-                        NEWFILE="$SLOTS/$PREFIX.$SUFFIX.$DATE.$HOST.log"
+                        NEWFILE="$LOGS/$PREFIX.$SUFFIX.$DATE.$HOST.log"
                     fi
-                    echo "Moving file: mv $SLOTS/$file $NEWFILE" >> $LOG
-                    mv $SLOTS/$file $NEWFILE
+                    echo "Moving file: mv $LOGS/$file $NEWFILE" >> $LOG
+                    mv $LOGS/$file $NEWFILE
                     gzip $NEWFILE
                     echo "Copying to s3: aws s3 cp ${NEWFILE}.gz $S3"  >> $LOG
                     aws s3 cp ${NEWFILE}.gz $S3

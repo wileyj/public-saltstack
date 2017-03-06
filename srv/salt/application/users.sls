@@ -1,4 +1,4 @@
-# application users
+# application.users
 {% set application = pillar['application'] | default(None) %}
 {% if application %}
 {% set users = pillar['application']['users'] | default(None) %}
