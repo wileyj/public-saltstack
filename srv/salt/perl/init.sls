@@ -1,5 +1,5 @@
-# perl:init
+# perl.init
 include:
     - perl.packages
-    - perl.cpan_config
+    - perl.cpan
     - perl.modules

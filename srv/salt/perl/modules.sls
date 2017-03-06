@@ -1,3 +1,4 @@
+# perl.modules
 {% set global_modules = pillar['modules'] | default(None) %}
 {% set global_modules_perl = pillar['modules']['perl'] | default(None) %}
 {% set application = pillar['application'] | default(None) %}
