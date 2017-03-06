@@ -1,7 +1,9 @@
+# topfile
 {% set virt      = grains['virtual_subtype'] | default(None)  %}
 {% set os_family = grains['os_family']       | default(None)  %}
 {% set environment = grains['instance']['environment'] | default(None) %}
 {% set role = grains['instance']['role'] | default(None) %}
+{% set cleanup = grains['instance']['cleanup']| default(None)  %}
 
 {% if environment and environment == 'prod' %}
     {% set file_root = "/srv/salt" %}
@@ -36,36 +38,4 @@ base:
         - logrotate.jobs
         #- harden
 {% endif %}
-        - cleanup.{{ virt }}
-
-
-
-# file_roots:
-#   dev:
-#     - /srv/salt
-#   qa:
-#     - /srv/salt
-#   prod:
-#     - /srv/salt
-#
-# base:
-#   '*':
-#     - base
-#     - python
-#     - resolver
-#     - limits
-#     - sysctl
-#     - logrotate.jobs
-#     - denyhosts
-#     - harden
-#   {% set roles = salt['grains.get']('roles',[]) -%}
-#   {% for role in roles -%}
-#   {% set states = salt['pillar.get']('states:'+role,[]) -%}
-#   {% if states -%}
-#   'roles:{{ role }}':
-#     - match: grain
-#     {% for state in states -%}
-#     - roles.{{ state }}
-#     {% endfor -%}
-#   {% endif -%}
-#   {% endfor -%}
+        - cleanup
