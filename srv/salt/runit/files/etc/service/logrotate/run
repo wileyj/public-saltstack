@@ -1,4 +1,6 @@
 #! /bin/sh
+# this is the same as cron, since it's logrotate.
+# maintain a separate service file for completeness
 exec 2>&1
 source /etc/envvars
 exec /usr/sbin/crond -n -s
