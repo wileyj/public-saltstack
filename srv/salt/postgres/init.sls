@@ -1,1 +1,1 @@
-#postgres:init
+# postgres.init
