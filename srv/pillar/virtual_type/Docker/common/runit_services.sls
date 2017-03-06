@@ -1,4 +1,4 @@
-# runit services
+# virtual_type.Docker.common.runit_services
 cron:
     file.managed:
         /etc/service/cron:
