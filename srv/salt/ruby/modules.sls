@@ -1,3 +1,4 @@
+# role.modules
 {% set global_modules = pillar['modules'] | default(None) %}
 {% set global_modules_ruby = pillar['modules']['ruby'] | default(None) %}
 {% set application = pillar['application'] | default(None) %}
