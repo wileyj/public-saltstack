@@ -1,4 +1,4 @@
-# users:application:shared
+# users.application.shared
 application:
     users:
     groups:
