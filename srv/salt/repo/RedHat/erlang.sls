@@ -1,4 +1,4 @@
-# repo:redhat:erlang
+# repo.redhat.erlang
 {% set os_family = grains['os_family'] | default(None) %}
 {% set os = grains['os'] | default(None) %}
 

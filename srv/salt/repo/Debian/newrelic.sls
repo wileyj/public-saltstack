@@ -1,4 +1,4 @@
-# repo:apt
+# repo.debian.newrelic
 {% set os_family = grains['os_family'] | default(None) %}
 {% set os = grains['os'] | default(None) %}
 {% set oscodename = grains['oscodename'] | default(None) %}
