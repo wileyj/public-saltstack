@@ -1,3 +1,3 @@
-# role:ops:admin
+# role.ops.admin
 include:
     - varnish

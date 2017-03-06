@@ -1,4 +1,4 @@
-# role:ops:logrotate
+# role.ops.logrotate
 include:
     - logrotate
     - logrotate.jobs
