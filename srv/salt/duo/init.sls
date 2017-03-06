@@ -1,5 +1,6 @@
+# duo.init
 include:
-  - duo.packages
+    - duo.packages
 
 # service:
 #   service.running:
