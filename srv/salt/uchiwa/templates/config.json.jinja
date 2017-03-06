@@ -1,0 +1,27 @@
+# remove erb templating further; loop through defined datacenters in pillar
+{
+    "sensu": [<% datacenters = scope.lookupvar('uchiwa_app_datacenters').length %><% scope.lookupvar('uchiwa_app_datacenters').each_pair do |key, value| %><% datacenters=datacenters - 1 %>{
+            "name": "<%= key %>",
+            "host": "<%= value['node'] %>",
+            "ssl":  {{ pillar['uchiwa']['sensu_use_ssl'] }},
+            "port": {{ pillar['uchiwa']['api_port'] }},
+            "user": "{{ pillar['uchiwa']['api_user'] }}",
+            "pass": "{{ pillar['uchiwa']['api_password'] }}",
+            "path": "{{ pillar['uchiwa']['sensu_path'] }}",
+            "timeout": {{ pillar['uchiwa']['sensu_timeout'] }}
+    }<%= ',' if (datacenters > 0) %><% end %>],
+    "uchiwa": {
+        "user": "{{ pillar['uchiwa']['admin_user'] }} ",
+        "pass": "{{ pillar['uchiwa']['admin_password'] }}",
+        "port": {{ pillar['uchiwa']['port'] }},
+        "stats": {{ pillar['uchiwa']['stats'] }},
+        "refresh": {{ pillar['uchiwa']['refresh'] }},
+        "users":[<% users = scope.lookupvar('uchiwa_app_users').length %><% scope.lookupvar('uchiwa_app_users').each_pair do |key, value| %>{<% users=users - 1 %>
+            "username" : "<%= key %>",
+            "password" : "<%= value['password'] %>",
+            "role" : {
+                "readonly": <%= value['readonly'] %>
+            }
+        }<%= ',' if (users  > 0) %><% end %>]
+    }
+}
