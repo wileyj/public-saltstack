@@ -1,16 +1,16 @@
-# varnish:runit
-varnish runit dir:
+# squid.unit
+squid runit dir:
     file.directory:
-        - name: /etc/service/varnish
+        - name: /etc/service/squid
         - user: root
         - group: root
         - mode: 0755
         - makedirs: True
 
-varnish runit script:
+squid runit script:
     file.managed:
-        - name: /etc/service/varnish/run
+        - name: /etc/service/squid/run
         - user: root
         - group: root
         - mode: 0755
-        - source: salt://runit/files/etc/service/varnish/run
+        - source: salt://runit/files/etc/service/squid/run

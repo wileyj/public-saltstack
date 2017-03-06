@@ -1,4 +1,4 @@
-# varnish:files
+# squid.files
 varnish dir - /etc/varnish/vcl.d:
     file.recurse:
         - name: /etc/varnish/vcl.d
@@ -19,7 +19,7 @@ varnish file - /etc/varnish/secrets:
         - user: root
         - group: root
         - file_mode: 0600
-        - source: salt://varnish/templates/secret.jinja2
+        - source: salt://varnish/templates/secret.jinja
         - template: jinja
 
 varnish file - /etc/varnish/varnish.params:
