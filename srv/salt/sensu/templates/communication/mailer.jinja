@@ -1,0 +1,22 @@
+{
+    "mailer": {
+        "mail_from": "{{ pillar['sensu']['mail']['from'] }}",
+        "mail_to": "{{ pillar['sensu']['mail']['to'] }}",
+        "smtp_address": "localhost",
+        "smtp_port": "25",
+        "subscriptions": {
+            "vpn": {
+                "mail_to": "{{ pillar['sensu']['mail']['dev'] }}"
+            },
+            "default": {
+                "mail_to": "{{ pillar['sensu']['mail']['alerts'] }}"
+            },
+            "apache webservice": {
+                "mail_to": "{{ pillar['sensu']['mail']['alerts'] }}"
+            },
+            "nginx webservice": {
+                "mail_to": "{{ pillar['sensu']['mail']['alerts'] }}>"
+            }
+        }
+    }
+}
