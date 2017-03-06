@@ -1,4 +1,4 @@
-# role:ops:varnish
+# role.ops.uchiwa
 role:
     secret: asdf
     newrelic:
