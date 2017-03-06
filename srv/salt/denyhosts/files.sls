@@ -1,3 +1,4 @@
+# denyhosts.files
 denyhosts - /opt/denyhosts/etc/denyhosts.cfg:
     file.managed:
         - name: /opt/denyhosts/etc/denyhosts.cfg
@@ -5,7 +6,7 @@ denyhosts - /opt/denyhosts/etc/denyhosts.cfg:
         - group: root
         - mode: 0644
         - template: jinja
-        - source: salt://denyhosts/templates/denyhosts.cfg.j2
+        - source: salt://denyhosts/templates/denyhosts.cfg.jinja
 
 denyhosts - /opt/denyhosts/bin/denyhosts.py:
     file.managed:
