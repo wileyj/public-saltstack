@@ -1,3 +1,4 @@
+# role.ops.uchiwa
 uchiwa:
   classes: profiles::nodejs
   script_dir: "/usr/lib/golang/src/github.com/sensu/uchiwa"

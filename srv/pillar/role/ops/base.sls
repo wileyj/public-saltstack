@@ -1,4 +1,4 @@
-# role:ops:base
+# role.ops.base
 role:
     newrelic:
         enabled: false

@@ -1,4 +1,4 @@
-# role:ops:admin
+# role.ops.admin
 role:
     newrelic:
         enabled: false

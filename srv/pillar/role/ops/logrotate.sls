@@ -1,4 +1,4 @@
-# role:ops:in
+# role.ops.logrotate
 role:
     newrelic:
         enabled: false
@@ -65,21 +65,3 @@ logrotate:
                 - notifempty
                 - create 640 root
                 - sharedscripts
-
-        apache:
-            path:
-                - /var/log/apache2/access.log
-                - /var/log/apache2/error.log
-            config:
-                - daily
-                - missingok
-                - nomail
-                - rotate 10
-                - nocompress
-                - size 100M
-                - notifempty
-                - create 640 root
-                - sharedscripts
-                - postrotate
-                - /usr/sbin/apachectl graceful > /dev/null 2>/dev/null
-                - endscript
