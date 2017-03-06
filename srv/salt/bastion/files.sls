@@ -1,3 +1,4 @@
+# bastion.files
 /opt/scripts/chroot_setup.pl:
     owner   : 'root'
     group   : 'root'

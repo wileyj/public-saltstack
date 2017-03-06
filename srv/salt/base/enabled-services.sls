@@ -1,3 +1,4 @@
+# base.enabled-services
 auditd:
   service.running:
     - enable: True
