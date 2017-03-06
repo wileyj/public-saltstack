@@ -1,3 +1,4 @@
+# virtual_type.EC2.common.sensu
 sensu:
   host: shared-sensu-001.p.use1.domain.com
   purge_config: true
