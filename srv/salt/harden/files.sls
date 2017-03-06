@@ -1,3 +1,4 @@
+# harden.files
 harden files - /etc/profile.d/os-security.sh:
     file.managed:
         - name: /etc/profile.d/os-security.sh

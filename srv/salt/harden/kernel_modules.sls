@@ -1,3 +1,5 @@
+# harden.kernel_modules
+
 harden kernel - /etc/modprobe.d/dccp.conf:
     file.managed:
         - name: /etc/modprobe.d/dccp.conf

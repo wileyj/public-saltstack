@@ -1,3 +1,4 @@
+# harden.init
 include:
   - harden.files
   - harden.kernel_modules
