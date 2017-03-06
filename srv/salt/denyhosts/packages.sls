@@ -1,4 +1,5 @@
+# denyhosts.packages
 denyhosts packages:
-  pkg.installed:
-    - refresh: True
-    - pkgs: [ 'denyhosts' ]
+    pkg.installed:
+        - refresh: True
+        - pkgs: [ 'denyhosts' ]
