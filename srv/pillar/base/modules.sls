@@ -1,8 +1,9 @@
+# base.modules
 modules:
     python:
-{% if grains['virtual_subtype'] != 'Docker' -%}
+        - python-dateutil
+{% if grains['virtual_subtype'] != 'Docker' %}
         - awscli
         - boto3
         - botocore
 {% endif %}
-        - python-dateutil

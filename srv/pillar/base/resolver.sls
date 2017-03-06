@@ -1,3 +1,4 @@
+# base.resolver
 resolver:
     nameservers:
         - 8.8.8.8
