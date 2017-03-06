@@ -1,4 +1,4 @@
-# nginx:files
+# nginx.files
 nginx files - /etc/nginx/nginx.conf:
     file.managed:
         - name: /etc/nginx/nginx.conf
