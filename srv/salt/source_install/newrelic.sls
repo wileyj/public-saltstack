@@ -1,3 +1,4 @@
+# source_install.newrelic
 {% if pillar['role'] is defined and pillar['role']['newrelic'] is defined %}
     {% set newrelic_packages = pillar['role']['newrelic']['packages'] | default(None) %}
 
