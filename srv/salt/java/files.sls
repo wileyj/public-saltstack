@@ -1,3 +1,4 @@
+# java.files
 java symlink - /usr/bin/java:
     file.symlink:
         - name: /usr/bin/java
