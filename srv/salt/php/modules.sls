@@ -1,3 +1,4 @@
+# php.modules
 {% set global_modules = pillar['modules'] | default(None) %}
 {% set global_modules_php = pillar['modules']['php'] | default(None) %}
 {% set application = pillar['application'] | default(None) %}
