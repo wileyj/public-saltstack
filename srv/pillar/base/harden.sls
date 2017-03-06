@@ -1,3 +1,4 @@
+# base.harden
 packages:
     harden:
         - denyhosts

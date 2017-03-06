@@ -1,4 +1,4 @@
-# cleanup.Docker.common
+# cleanup.EC2.common
 common_cleanup:
     packages:
         - automake

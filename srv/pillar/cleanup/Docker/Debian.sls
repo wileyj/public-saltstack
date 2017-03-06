@@ -1,31 +1,28 @@
+# cleanup.Docker.Debian
 os_cleanup:
     packages:
-        - autotools-dev
-        - geomview
-        - x11proto
-        - xfonts*
-        - gsfonts
-        - gsfonts-x11
+        - openssh-client
+        - python-async
+        - python-git
+        - python-gitdb
+        - python-mysqldb
+        - python-smmap
+        - rsync
         - git
-        - cpp-*
-        - dpkg-dev
-        - dictionaries-common
-        - manpages
-        - manpages-dev
-        - whiptail
-        - ubuntu-minimal
-        - xkb-data
-        - mlock
-        - xpdf
-        - qt3-dev-tools
-        - libssl-dev
-        - postfix
-        - libxml2-dev
-        - libexpat1-dev
+        - git-man
+        - liberror-perl
+        - libx11-dev*
+        - x11proto-core-dev*
+        - libasound2-dev*
+        - libxcb1-dev*
+        - libxcb-rand*
+        - libxcb-xfixes0*
+        - libx11-doc
+        - xorg-sgml-doctools
+        - linux-libc-dev
+
     modules:
         python:
-            - Mako
-            - wsgiref
         ruby:
         perl:
     dirs:
