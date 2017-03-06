@@ -1,1 +1,1 @@
-# sensu:users
+# sensu.users
