@@ -1,4 +1,5 @@
-{% from "limits/templates/package_map.j2" import pkgs with context %}
+# limits.init
+{% from "limits/templates/package_map.jinja" import pkgs with context %}
 
 pam:
     pkg.installed:
@@ -11,6 +12,6 @@ pam:
         - group: root
         - mode: 440
         - template: jinja
-        - source: salt://limits/templates/limits.j2
+        - source: salt://limits/templates/limits.jinja
         - require:
             - pkg: pam
