@@ -1,4 +1,4 @@
-# varnish:runit
+# varnish.runit
 varnish runit dir:
     file.directory:
         - name: /etc/service/varnish
