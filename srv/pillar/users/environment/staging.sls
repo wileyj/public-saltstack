@@ -1,4 +1,4 @@
-# users:environment:staging
+# users.environment.staging
 environment:
     users:
     groups:

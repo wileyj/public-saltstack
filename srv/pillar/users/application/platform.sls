@@ -1,4 +1,4 @@
-# users:application:platform
+# users.application.platform
 application:
     users:
     groups:

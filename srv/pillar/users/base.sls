@@ -1,5 +1,4 @@
-# users:base
-
+# users.base
 base:
     users:
     groups:

@@ -1,4 +1,4 @@
-# users:application:ops
+# users.application.ops
 application:
     users:
     groups:
