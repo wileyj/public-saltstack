@@ -1,5 +1,5 @@
-# repo:redhat:init
+# repo.redhat.init
 include:
-    - repo.{{ grains['osfamily'] }}.epel
-    - repo.{{ grains['osfamily'] }}.erlang
-    - repo.{{ grains['osfamily'] }}.local
+    - repo.{{ grains['os_family'] }}.epel
+    - repo.{{ grains['os_family'] }}.erlang
+    - repo.{{ grains['os_family'] }}.local

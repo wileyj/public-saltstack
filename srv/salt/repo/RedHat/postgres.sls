@@ -1,4 +1,4 @@
-# repo:redhat:postgres
+# repo.redhat.postgres
 {% set os_family = grains['os_family'] | default(None) %}
 {% set os = grains['os'] | default(None) %}
 

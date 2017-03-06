@@ -1,4 +1,4 @@
-# repo:redhat:local
+# repo.redhat.local
 {% set os_family = grains['os_family'] | default(None) %}
 {% set os = grains['os'] | default(None) %}
 
