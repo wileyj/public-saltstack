@@ -1,8 +1,9 @@
-# Turn on execshield
+# harden.sysctl
 harden sysctl - kernel.exec-shield:
   sysctl.present:
     - name: kernel.exec-shield
     - value: 1
+
 harden sysctl - kernel.randomize_va_space:
   sysctl.present:
     - name: kernel.randomize_va_space

@@ -1,3 +1,4 @@
+# harden.modprobe
 harden modprobe - /etc/modprobe.d/cramfs.conf:
     file.managed:
         - name: /etc/modprobe.d/cramfs.conf
