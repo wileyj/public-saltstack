@@ -1,3 +1,4 @@
+# source_install.ruby
 {% if pillar['role'] is defined %}
 {% set ruby_version = pillar['role']['ruby_version'] | default(None) %}
 {% set ruby_version_dl_url = pillar['role']['ruby_version_dl_url'] | default(None) %}
