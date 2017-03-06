@@ -1,4 +1,5 @@
-{% set packages        = pillar['packages']           | default(None) %}
+# python.packages
+{% set packages = pillar['packages'] | default(None) %}
 {% if packages %}
 {% set python_packages = pillar['packages']['python'] | default(None) %}
 {% if packages and python_packages %}
