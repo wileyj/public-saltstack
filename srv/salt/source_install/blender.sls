@@ -34,7 +34,7 @@
                 - skip_verify: true
                 - trim_output: 10
                 - user: {{ application_user }}
-                - group: {{ application_group }}
+                - group: {{application_group }}
                 - if_missing: /opt/{{ blender_version }}
 
         source_install blender dir symlink - /opt/blender:
@@ -49,7 +49,17 @@
                 - name: /opt/blender/cur-ver
                 - target: /opt/{{ blender_version }}/{{ blender_version_short }}
                 - user: {{ application_user }}
-                - group: {{ application_group }}
+                - group: {{application_group }}
 
+        {% if role and application %}
+        source_install blender file create - /opt/blender/cur-ver/scripts/addons/io_mesh_stl/stl_utils.py:
+            file.managed:
+                - name: /opt/blender/cur-ver/scripts/addons/io_mesh_stl/stl_utils.py
+                - source: salt://source_install/files/blender/stl_utils.py
+                - user: {{ application_user }}
+                - group: {{ application_group }}
+                - mode: 0755
+                - replace: true
+        {% endif %}
     {% endif %}
 {% endif %}
