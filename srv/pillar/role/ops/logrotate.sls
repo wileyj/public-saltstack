@@ -40,19 +40,6 @@ logrotate:
                 - create 640 root
                 - sharedscripts
 
-        /srv/log/file:
-            path:
-                - /tmp/var/log/mysql/error
-            config:
-                - weekly
-                - missingok
-                - rotate 52
-                - compress
-                - delaycompress
-                - notifempty
-                - create 640 root
-                - sharedscripts
-
         ecs:
             path:
                 - /var/log/ecs/ecs-agent.log.*
@@ -65,3 +52,20 @@ logrotate:
                 - notifempty
                 - create 640 root
                 - sharedscripts
+
+        prod-apache:
+            path:
+                - /var/log/apache2/*.log
+            config:
+                - daily
+                - missingok
+                - nomail
+                - rotate 10
+                - nocompress
+                - size 100M
+                - notifempty
+                - create 640 root
+                - sharedscripts
+                - postrotate
+                - /usr/sbin/apachectl graceful > /dev/null 2>/dev/null
+                - endscript

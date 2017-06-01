@@ -1,0 +1,16 @@
+{
+    "api.version": "v1",
+    "source": {
+        "name": "nginx_error_log",
+        "sourceType": "LocalFile",
+        "category": "Application/nginx/error_log",
+        "pathExpression": "/var/log/nginx/error_log",
+        "useAutolineMatching": false,
+        "multilineProcessingEnabled": false,
+        "targetCpu": 50,
+        "automaticDateParsing": true,
+        "forceTimeZone": false,
+        "cutoffRelativeTime": "-1d",
+        "blacklist":[]
+    }
+}
