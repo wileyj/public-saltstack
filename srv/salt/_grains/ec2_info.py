@@ -5,7 +5,7 @@ import json
 import logging
 log = logging.getLogger(__name__)
 
-domain = "domain.net"
+domain = "local.com"
 regions = {
     "us-east-1" : "use1",
     "us-west-1" : "usw1",

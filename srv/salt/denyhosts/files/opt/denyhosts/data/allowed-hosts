@@ -16,3 +16,4 @@
 # 1.1.1.[6-23]
 # the following line prevents DenyHosts from blocking the host foo
 #foo
+10.1.100.*
