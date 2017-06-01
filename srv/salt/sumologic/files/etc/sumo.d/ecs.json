@@ -7,6 +7,8 @@
         "pathExpression": "/var/log/ecs/ecs-agent.log*",
         "multilineProcessingEnabled": false,
         "useAutolineMatching": false,
-        "automaticDateParsing": true
+        "automaticDateParsing": true,
+        "cutoffRelativeTime": "-1d",
+        "blacklist":[]
     }
 }
