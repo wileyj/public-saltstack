@@ -13,3 +13,6 @@
 [submodule "srv/salt/os-hardening"]
     path = srv/salt/os-hardening
     url = https://github.com/saltstack-formulas/os-hardening-formula
+[submodule "srv/salt/sensu/files/etc/sensu/plugins"]
+	path = srv/salt/sensu/files/etc/sensu/plugins
+	url = https://github.com/wileyj/public-monitoring
