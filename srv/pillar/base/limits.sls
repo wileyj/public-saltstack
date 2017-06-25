@@ -5,7 +5,6 @@ limits:
           - limit_type: hard
             limit_item: nofile
             limit_value: 102400
-
           - limit_type: soft
             limit_item: nofile
             limit_value: 102400

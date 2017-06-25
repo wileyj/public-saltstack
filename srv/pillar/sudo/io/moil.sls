@@ -1,4 +1,4 @@
-# sudo.com.local
+# sudo.io.moil
 domain_sudo:
   key1: value1
   key2: value2
