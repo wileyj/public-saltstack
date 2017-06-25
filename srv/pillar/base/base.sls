@@ -1,3 +1,3 @@
 # base.base
-company: Local
-domain: local.com
+company: moil
+domain:  moil.io

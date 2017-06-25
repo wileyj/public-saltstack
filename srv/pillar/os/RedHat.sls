@@ -1,5 +1,5 @@
 # os.RedHat
-repo_address: s3.amazonaws.com/local-package-repo/yum/RPMS
+repo1: testrepo1
 packages:
     apache: httpd
     git: git

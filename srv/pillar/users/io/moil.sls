@@ -1,5 +1,5 @@
-# users.com.local.use1.core.ops-salt-001
-host_users:
+# users.io.moil
+domain_users:
   key1: value1
   key2: value2
   list1:

@@ -11,6 +11,7 @@ base:
         - base/resolver
         - base/base
         # - base/files
+        - base/limits
         - base/packages
         - base/modules
         - base/sysctl
