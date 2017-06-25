@@ -1,14 +1,15 @@
 {
-    "api.version": "v1",
-    "source": {
-        "name": "syslog-collector-tcp",
-        "sourceType": "Syslog",
-        "port": 514,
-        "protocol": "TCP",
-        "encoding": "UTF-8",
-        "timeZone": "UTC",
-        "forceTimeZone": false,
-        "useAutolineMatching": false,
-        "multilineProcessingEnabled": false
-    }
+	"api.version": "v1",
+	"source": {
+		"sourceType": "Syslog",
+		"name": "syslog-collector-container-tcp",
+		"port": 514,
+		"protocol": "TCP",
+		"encoding": "UTF-8",
+		"timeZone": "UTC",
+		"forceTimeZone": false,
+		"useAutolineMatching": false,
+		"multilineProcessingEnabled": false,
+		"category": "collector-container"
+	}
 }

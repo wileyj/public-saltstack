@@ -1,5 +1,5 @@
-include "/etc/varnish/vcl.d/site1.vcl";
-include "/etc/varnish/vcl.d/site2.vcl";
+include "/etc/varnish/vcl.d/wileyj.net.vcl";
+include "/etc/varnish/vcl.d/moil.io.vcl";
 
 acl purge {
     "localhost";

@@ -38,4 +38,6 @@ base:
         - logrotate.jobs
         #- harden
 {% endif %}
+{% if cleanup %}
         - cleanup
+{% endif %}
