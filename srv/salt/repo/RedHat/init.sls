@@ -2,4 +2,4 @@
 include:
     - repo.{{ grains['os_family'] }}.epel
     - repo.{{ grains['os_family'] }}.erlang
-    - repo.{{ grains['os_family'] }}.local
+    - repo.{{ grains['os_family'] }}.moil

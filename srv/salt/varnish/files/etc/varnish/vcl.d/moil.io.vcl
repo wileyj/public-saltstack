@@ -1,4 +1,4 @@
-backend site1 {
+backend moil {
     .host = "localhost";
     .port = "8080";
     .probe = {
@@ -19,12 +19,12 @@ backend site1 {
 }
 
 sub vcl_init {
-    new site1_vdir = directors.round_robin();
-    site1_vdir.add_backend(site1);
+    new moil_vdir = directors.round_robin();
+    moil_vdir.add_backend(moil);
 }
 
 sub vcl_recv {
-    if (req.http.Host == "site1.com"){
-        set req.backend_hint = site1_vdir.backend();
+    if (req.http.Host == "moil.io"){
+        set req.backend_hint = moil_vdir.backend();
     }
 }

@@ -35,3 +35,4 @@ def get_osdisk_stats():
     log.debug("osdisk.available: %i" % (int(round(available/1.073741824e9))))
     log.debug("osdisk.capacity: %i" % (int(round(capacity/1.073741824e9))))
     return grains
+

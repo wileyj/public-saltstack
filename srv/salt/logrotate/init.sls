@@ -7,9 +7,7 @@ logrotate:
   service.running:
     - name: {{ logrotate.service }}
     - enable: True
-{% if grains['instance']['build_type'] != 'Packer' %}
-    # - reload: True
-{% endif %}
+    - reload: True
 {% endif %}
 
 logrotate_directory:

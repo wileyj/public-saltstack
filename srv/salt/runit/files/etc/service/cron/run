@@ -1,4 +1,0 @@
-#! /bin/sh
-exec 2>&1
-source /etc/envvars
-exec /usr/sbin/crond -n -s
