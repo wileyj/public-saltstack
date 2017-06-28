@@ -2,6 +2,11 @@
 {% set os_family = grains['os_family'] | default(None) %}
 {% set os = grains['os'] | default(None) %}
 
+# remove the temp file we created from packer, if it exists
+remove-packer-tempfile:
+    file.absent:
+        - name: /etc/yum.repos.d/temp.repo
+
 repo {{ os_family }} - moil_noarch:
     pkgrepo.managed:
         - name:  moil_noarch
