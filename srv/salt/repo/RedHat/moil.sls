@@ -16,7 +16,7 @@ repo {{ os_family }} - moil_noarch:
         - enabled: 1
         - gpgcheck : 1
         - priority : 1
-        - repo_gpgcheck: 1
+        # - repo_gpgcheck: 1
         - gpgkey: http://yumrepo.moil.io/RPM-GPG-KEY-wileyj
 
 repo {{ os_family }} - moil_x86_64:
@@ -28,5 +28,5 @@ repo {{ os_family }} - moil_x86_64:
         - enabled: 1
         - gpgcheck : 1
         - priority : 1
-        - repo_gpgcheck: 1
+        # - repo_gpgcheck: 1
         - gpgkey: http://yumrepo.moil.io/RPM-GPG-KEY-wileyj
