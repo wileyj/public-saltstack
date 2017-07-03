@@ -5,11 +5,6 @@ packages:
     git: git
     jdk: jdk
     java: jdk
-    python: python
-    python-pip: python-pip
-    python-setuptools: python-setuptools
-    python-tools: python-tools
-    python-dev: python-devel
     ruby: ruby
     ruby-dev: ruby-devel
     rubygems: rubygems
