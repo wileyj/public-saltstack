@@ -1,5 +1,5 @@
 # base.sysctl
-{% if grains['os'] == "Debian" or grains['os'] == "Ubuntu" %}
+{% if grains['os'] == "Debian" or grains['os'] == "Ubuntu" or grains['os'] == "Amazon" %}
 {% set procps = "procps" %}
 {% else %}
 {% set procps = "procps-ng" %}
