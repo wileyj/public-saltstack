@@ -1,6 +1,10 @@
 # os.RedHat.CentOS
 os:
-    repo2: testrepo2
     name: CentOS
     packages:
-        - yum
+        # - yum
+        python: python
+        python-pip: python-pip
+        python-setuptools: python-setuptools
+        python-tools: python-tools
+        python-dev: python-devel
