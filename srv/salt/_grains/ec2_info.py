@@ -38,7 +38,7 @@ def _ec2_network(data):
     ec2_network_grain["first_two_octets"] = data['NetworkInterfaces'][0]['PrivateIpAddress'].split(".")[0]+"."+data['NetworkInterfaces'][0]['PrivateIpAddress'].split(".")[1]
     ec2_network_grain["gateway"] = data['NetworkInterfaces'][0]['PrivateIpAddress'].split(".")[0]+"."+data['NetworkInterfaces'][0]['PrivateIpAddress'].split(".")[1]+".0.2"
     log.trace("setting ec2_network grains")
-    log.trace("\t[ec2-data] private_ip_address: %s" % (ec2_network_grain['tprivate_ip_address']))
+    log.trace("\t[ec2-data] private_ip_address: %s" % (ec2_network_grain['private_ip_address']))
     log.trace("\t[ec2-data] private_dns_name: %s" % (ec2_network_grain["private_dns_name"]))
     log.trace("\t[ec2-data] description: %s" % (ec2_network_grain["description"]))
     log.trace("\t[ec2-data] first_two_octets: %s" % (ec2_network_grain["first_two_octets"]))

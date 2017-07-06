@@ -1,8 +1,5 @@
 # base.logrotate
 logrotate:
-  lookup:
-    pkg: logrotate
-    service: crond
   jobs:
     syslog:
       path:

@@ -1,4 +1,8 @@
 # os.RedHat
+logrotate:
+  lookup:
+    pkg: logrotate
+    service: crond
 repo1: testrepo1
 packages:
     apache: httpd
