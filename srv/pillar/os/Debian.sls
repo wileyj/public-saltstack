@@ -1,7 +1,10 @@
 # os.Debian
 {% set os = grains['os'] | default(None) %}
 {% set oscodename = grains['oscodename'] | default(None) %}
-
+logrotate:
+  lookup:
+    pkg: logrotate
+    service: cron
 packages:
     apache: apache2
     git: git-core

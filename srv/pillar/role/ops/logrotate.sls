@@ -23,9 +23,9 @@ role:
         ruby:
         perl:
 logrotate:
-    lookup:
-        pkg: logrotate
-        service: crond
+    # lookup:
+    #     pkg: logrotate
+    #     service: crond
     jobs:
         /tmp/var/log/mysql/error:
             path:
@@ -65,5 +65,3 @@ logrotate:
                 - notifempty
                 - create 640 root
                 - sharedscripts
-
-  
