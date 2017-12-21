@@ -1,0 +1,14 @@
+NETWORKING=yes
+HOSTNAME={%- if grains['virtual_subtype'] != 'Docker' or grains['virtual_subtype'] != 'Docker' -%}
+{{ grains.get('ec2-data:ec2-tags:Name') }}
+{%- else -%}
+{{ grains['fqdn'] }}
+{%- endif %}
+NOZEROCONF=yes
+NETWORKING_IPV6=no
+IPV6INIT=no
+IPV6_ROUTER=no
+IPV6_AUTOCONF=no
+IPV6FORWARDING=no
+IPV6TO4INIT=no
+IPV6_CONTROL_RADVD=no

@@ -1,10 +1,8 @@
 # redis.init
 include:
-    - redis.users
-    - redis.packages
+    - redis.server
     - redis.files
+    - redis.config
 {% if grains['virtual_subtype'] == 'Docker' %}
     - redis.runit
-{% else %}
-    - redis.services
 {% endif %}

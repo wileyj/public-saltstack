@@ -1,42 +1,43 @@
 # base.files
-# create
-base files - /u:
-    file.directory:
-        - name: /u
-        - owner: root
-        - group: root
-        - mode: 0755
+/u:
+  file.directory:
+    - owner: root
+    - group: root
+    - mode: 0755
 
-base files - /u/log:
-    file.directory:
-        - name: /u
-        - owner: root
-        - group: root
-        - mode: 0755
+/u/log:
+  file.directory:
+    - owner: root
+    - group: root
+    - mode: 0755
 
-base files - /opt:
-    file.directory:
-        - name: /u
-        - owner: root
-        - group: root
-        - mode: 0755
+/opt:
+  file.directory:
+    - owner: root
+    - group: root
+    - mode: 0755
 
-base files - /opt/scripts:
-    file.directory:
-        - name: /u
-        - owner: root
-        - group: root
-        - mode: 0755
+/opt/scripts:
+  file.directory:
+    - owner: root
+    - group: root
+    - mode: 0755
 
-base files - /etc/service:
-    file.directory:
-        - name: /u
-        - owner: root
-        - group: root
-        - mode: 0755
+/etc/service:
+  file.directory:
+    - owner: root
+    - group: root
+    - mode: 0755
+
+/etc/motd:
+  file.managed:
+    - owner: root
+    - group: root
+    - mode: 0644
+    - source: salt://base/files/etc/motd
+
 
 #symlink
-base files - /u/logs:
-    file.symlink:
-        - name: /u/log
-        - target: /u/logs
+/u/logs:
+  file.symlink:
+    - target: /u/log

@@ -1,0 +1,3 @@
+{% for key, value in pillar.get('kernel_modules', {}).items() %}
+  install {{ key }} {{ value }}
+{%- endfor %}

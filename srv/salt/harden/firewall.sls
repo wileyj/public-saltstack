@@ -1,10 +1,10 @@
 # harden.firewall
 # don't use this for now
-include:
-  - harden.packages
-  - harden.services
+# include:
+#   - harden.packages
+#   - harden.services
 
-{% for key,rule in salt['pillar.get']('user-ports',{}).items() %}
+{% for key,rule in salt['pillar.get']('iptables',{}).items() %}
 
 user-ports-{{key}}:
 

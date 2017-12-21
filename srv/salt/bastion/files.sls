@@ -1,17 +1,29 @@
-# bastion.files
-/opt/scripts/chroot_setup.pl:
-    owner   : 'root'
-    group   : 'root'
-    ensure  : present
-    replace : true
-    mode    : '0755'
-    source  : puppet:///modules/bastion/opt/scripts/chroot_setup.pl
+#bastion.files
 
+# /opt/scripts/chroot_setup.pl:
+#   file.managed:
+#       - user: root
+#       - group: root
+#       - mode: 0755
+#       - source: salt://bastion/files/opt/scripts/chroot_setup.pl
 /export:
-    ensure : directory
+  file.directory:
+    - owner: root
+    - group: root
+    - mode: 0755
 
 /export/jail:
-    ensure : directory
+  file.directory:
+    - owner: root
+    - group: root
+    - mode: 0755
 
-/export/jail/etc:
-    ensure : directory
+# this is being added to chroot script. 
+# /home/rzshuser/.ssh:
+#   file.directory:
+#     - owner: rzshuser
+#     - group: jailed
+#     - mode: 0700
+#
+# /home/rzshuser/.ssh/authorized_keys:
+#   file.touch

@@ -1,0 +1,17 @@
+{
+    "rabbitmq": {
+        "host":     {{ pillar['sensu']['rabbitmq']['host']|yaml_dquote }},
+        "port":     {{ pillar['sensu']['rabbitmq']['port'] }},
+        "vhost":    {{ pillar['sensu']['rabbitmq']['vhost']|yaml_dquote }},
+        "user":     {{ pillar['sensu']['rabbitmq']['user']|yaml_dquote }},
+        "password": {{ pillar['sensu']['rabbitmq']['password']|yaml_dquote }}
+    },
+    "redis": {
+        "host":     {{ pillar['sensu']['redis']['host']|yaml_dquote }},
+        "port":     {{ pillar['sensu']['redis']['port'] }}
+    },
+    "api": {
+        "host":     {{ pillar['sensu']['api']['host']|yaml_dquote }},
+        "port":     {{ pillar['sensu']['api']['port'] }}
+    }
+}

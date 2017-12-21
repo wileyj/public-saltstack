@@ -1,0 +1,97 @@
+#
+# /etc/zshenv is sourced on all invocations of the
+# shell, unless the -f option is set.  It should
+# contain commands to set the command search path,
+# plus other important environment variables.
+# .zshenv should not contain commands that produce
+# output or assume the shell is attached to a tty.
+#
+export PATH=/export/jail/usr/bin:/export/jail/bin
+bindkey '\e[3~' delete-char
+alias bindkey=""
+alias compcall=""
+alias compctl=""
+alias compsys=""
+alias source=""
+alias vared=""
+alias zle=""
+alias bg=""
+
+disable compgroups
+disable compquote
+disable comptags
+disable comptry
+disable compvalues
+disable pwd
+disable alias
+disable autoload
+disable break
+disable builtin
+disable command
+disable comparguments
+disable compcall
+disable compctl
+disable compdescribe
+disable continue
+disable declare
+disable dirs
+disable disown
+disable echo
+disable echotc
+disable echoti
+disable emulate
+disable enable
+disable eval
+disable exec
+disable export
+disable false
+disable float
+disable functions
+disable getln
+disable getopts
+disable hash
+disable integer
+disable let
+disable limit 
+disable local 
+disable log 
+disable noglob 
+disable popd 
+disable print 
+disable pushd 
+disable pushln
+disable read 
+disable readonly 
+disable rehash 
+disable sched 
+disable set 
+disable setopt 
+disable shift 
+disable source 
+disable suspend 
+disable test 
+disable times 
+disable trap 
+disable true 
+disable ttyctl 
+disable type 
+disable typeset 
+disable ulimit 
+disable umask 
+disable unalias 
+disable unfunction 
+disable unhash 
+disable unlimit 
+disable unset 
+disable unsetopt 
+disable vared 
+disable whence 
+disable where 
+disable which 
+disable zcompile 
+disable zformat 
+disable zle 
+disable zmodload 
+disable zparseopts 
+disable zregexparse 
+disable zstyle

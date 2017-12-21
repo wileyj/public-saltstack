@@ -4,4 +4,4 @@
 test -x /usr/share/logwatch/scripts/logwatch.pl || exit 0
 
 #execute
-/usr/sbin/logwatch --mailto {{salt['pillar.get']('logwatch:mailto')}}
+/usr/sbin/logwatch --mailto {{ pillar['logwatch']['mailto'] }}

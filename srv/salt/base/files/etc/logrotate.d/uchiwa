@@ -1,0 +1,11 @@
+/var/log/uchiwa/uchiwa.log {
+    rotate 7
+    daily
+    missingok
+    notifempty
+    sharedscripts
+    compress
+    postrotate
+        /etc/init.d/uchiwa restart 2> /dev/null` 2> /dev/null || true
+    endscript
+}

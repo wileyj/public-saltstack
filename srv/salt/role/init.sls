@@ -3,8 +3,8 @@
 {% set instance = grains['instance'] | default(None) %}
 {% if role and instance %}
     {% set newrelic = pillar['role']['newrelic'] | default(None) %}
-    {% set instance_application = grains['instance']['application'] | default(None) %}
-    {% set instance_role = grains['instance']['role'] | default(None) %}
+    {% set instance_application = grains['application'] | default(None) %}
+    {% set instance_role = grains['role'] | default(None) %}
     {% if newrelic %}
         {% set newrelic_enabled = pillar['role']['newrelic']['enabled'] | default(None) %}
         {% set newrelic_packages = pillar['role']['newrelic']['packages'] | default(None) %}

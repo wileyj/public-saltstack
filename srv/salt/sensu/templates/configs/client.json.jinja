@@ -1,0 +1,15 @@
+{
+    "client": {
+        "name": {{ grains['ec2-data']['ec2-tags']['Name']|yaml_dquote }},
+        "address": {{ grains['ec2-metadata']['private_ip']|yaml_dquote }},
+        "keepalive": {
+            "thresholds": {
+                "warning": {{ pillar['sensu']['config']['client']['warning'] }},
+                "critical": {{ pillar['sensu']['config']['client']['critical'] }}
+            },
+            "refresh": {{ pillar['sensu']['config']['client']['refresh'] }}
+        },
+        "subscriptions": [ "{{  pillar['sensu']['config']['client']['subscriptions']|join('", "') }}" ]
+
+    }
+}

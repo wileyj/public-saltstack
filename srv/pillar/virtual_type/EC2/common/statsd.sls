@@ -1,8 +1,8 @@
 # virtual_type.EC2.common.statsd
 statsd:
   config:
-    port: 8125
-    mgmt_port: 8126
+    # port: 8125
+    # mgmt_port: 8126
     debug: false
     statsd_title: statsd
     healthStatus: up

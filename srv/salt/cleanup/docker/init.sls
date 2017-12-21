@@ -1,18 +1,23 @@
 # cleanup.Docker.init
+{% if grains["virtual_subtype"]  == "Xen PV DomU" %}
+{% set virt = "EC2" %}
+{% else %}
+{% set virt = grains['virtual_subtype'] | default(None)  %}
+{% endif %}
 {% set instance_grain = grains['instance'] | default(None) %}
 {% if instance_grain %}
-    {% set role = grains['instance']['role'] | default(None) %}
-    {% set application = grains['instance']['application'] | default(None) %}
+    {% set role = grains['role'] | default(None) %}
+    {% set application = grains['application'] | default(None) %}
     {% set cleanup = grains['instance']['cleanup'] | default(None) %}
     {% if cleanup %}
         include:
-            - cleanup.{{ grains['virtual_subtype'] }}.{{ grains['os_family'] }}
-            - cleanup.{{ grains['virtual_subtype'] }}.common
+            - cleanup.{{ virt }}.{{ grains['os_family'] }}
+            - cleanup.{{ virt }}.common
         {% if application %}
-            - cleanup.{{ grains['virtual_subtype'] }}.application
+            - cleanup.{{ virt }}.application
         {% endif %}
         {% if role %}
-            - cleanup.{{ grains['virtual_subtype'] }}.role
+            - cleanup.{{ virt }}.role
         {% endif %}
     {% endif %}
     {% if role and role == 'base' %}

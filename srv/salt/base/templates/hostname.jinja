@@ -1,0 +1,5 @@
+{% if grains['virtual_subtype'] != 'Docker' %}
+{{ grains['ec2-data']['ec2-tags']['Name'] }}
+{% else %}
+{{ grains['fqdn'] }}
+{% endif %}

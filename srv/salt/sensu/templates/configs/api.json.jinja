@@ -1,0 +1,8 @@
+{
+    "api": {
+        "host": {{ pillar['sensu']['api']['host']|yaml_dquote }},
+        "port": {{ pillar['sensu']['api']['port']|yaml_dquote }},
+        "user": {{ pillar['sensu']['api']['user']|yaml_dquote }},
+        "password": {{ pillar['sensu']['api']['password']|yaml_dquote }}
+    }
+}

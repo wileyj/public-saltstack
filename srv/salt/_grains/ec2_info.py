@@ -5,11 +5,10 @@ import json
 import logging
 log = logging.getLogger(__name__)
 domain = "moil.io"
-
 regions = {
-    "us-east-1" : "use1",
-    "us-west-1" : "usw1",
-    "us-west-2" : "usw2"
+    "us-east-1": "use1",
+    "us-west-1": "usw1",
+    "us-west-2": "usw2"
 }
 env_short = {
     "production": "prd",
@@ -22,6 +21,16 @@ env_short = {
     "web": "web",
     "db": "db"
 }
+global_grains = {
+    "application": "",
+    "role": "",
+    "environment": "",
+    "name": "",
+    "region": "",
+    "profile": ""
+}
+
+
 def _call_aws(url):
     log.trace("[ec2-data] contacting metadata service...")
     conn = httplib.HTTPConnection("169.254.169.254", 80, timeout=1)
@@ -29,14 +38,15 @@ def _call_aws(url):
     log.trace("[ec2-data] executing else clause")
     return conn.getresponse().read()
 
+
 def _ec2_network(data):
     ec2_network_grain = {}
     nics = []
     ec2_network_grain["private_ip_address"] = data['NetworkInterfaces'][0]['PrivateIpAddress']
     ec2_network_grain["private_dns_name"] = data['NetworkInterfaces'][0]['PrivateDnsName']
     ec2_network_grain["description"] = data['NetworkInterfaces'][0]['Description']
-    ec2_network_grain["first_two_octets"] = data['NetworkInterfaces'][0]['PrivateIpAddress'].split(".")[0]+"."+data['NetworkInterfaces'][0]['PrivateIpAddress'].split(".")[1]
-    ec2_network_grain["gateway"] = data['NetworkInterfaces'][0]['PrivateIpAddress'].split(".")[0]+"."+data['NetworkInterfaces'][0]['PrivateIpAddress'].split(".")[1]+".0.2"
+    ec2_network_grain["first_two_octets"] = data['NetworkInterfaces'][0]['PrivateIpAddress'].split(".")[0] + "." + data['NetworkInterfaces'][0]['PrivateIpAddress'].split(".")[1]
+    ec2_network_grain["gateway"] = data['NetworkInterfaces'][0]['PrivateIpAddress'].split(".")[0] + "." + data['NetworkInterfaces'][0]['PrivateIpAddress'].split(".")[1] + ".0.2"
     log.trace("setting ec2_network grains")
     log.trace("\t[ec2-data] private_ip_address: %s" % (ec2_network_grain['private_ip_address']))
     log.trace("\t[ec2-data] private_dns_name: %s" % (ec2_network_grain["private_dns_name"]))
@@ -58,6 +68,7 @@ def _ec2_network(data):
         }
         nics.append(info)
     return ec2_network_grain
+
 
 def _ec2_disk(data):
     ec2_disk_grain = {}
@@ -83,13 +94,31 @@ def _ec2_disk(data):
     log.trace("\t[ec2-data] block_device_mappings: %s" % (ec2_disk_grain["block_device_mappings"]))
     return ec2_disk_grain
 
+
 def _ec2_tags(data):
     ec2_tag_grain = {}
     log.trace("setting ec2_tags grains")
     for tag in data:
         ec2_tag_grain[tag['Key']] = tag['Value']
         log.trace("\t[ec2-data] Tag(%s): %s" % (tag['Key'], tag['Value']))
+        if tag['Key'] == "Name":
+            token = tag['Value'].split("-")
+            if len(token) > 2:
+                global_grains['role'] = token[1]
+                global_grains['application'] = token[0]
+                global_grains['name'] = tag['Value']
+            # token = tag['Value'].split(".")
+            # global_grains['environment'] = token[1]
+        if tag['Key'] == "Environment":
+            global_grains['environment'] = tag['Value']
+        if tag['Key'] == "Profile":
+            global_grains['profile'] = tag['Value']
+    if global_grains['environment'] is "":
+        token = global_grains["name"].split(".")
+        if len(token) > 1:
+            global_grains['environment'] = token[1]
     return ec2_tag_grain
+
 
 def _ec2_info(data):
     ec2_info_grain = {}
@@ -119,7 +148,8 @@ def _ec2_info(data):
     log.trace("\t[ec2-data] IamInstanceProfile: %s" % (ec2_info_grain["IamInstanceProfile"]))
     return ec2_info_grain
 
-#if __name__ == "__main__":
+
+# if __name__ == "__main__":
 def function():
     try:
         log.trace("[ec2-data] starting ec2_info.py")
@@ -127,10 +157,11 @@ def function():
         instance_id = str(_call_aws("/latest/meta-data/instance-id/"))
         log.trace("[ec2-data] Trying to retrieve region from metadata service")
         region = str(json.loads(_call_aws("/latest/dynamic/instance-identity/document"))['region'])
+        global_grains['region'] = region
     except IOError as e:
         log.trace("error: %s" % (e))
         return {'ec2-data': ''}
-    ec2_client = boto3.client('ec2', region_name='us-west-2')
+    ec2_client = boto3.client('ec2', region_name=region)
     instances = ec2_client.describe_instances(
         Filters=[{
             'Name': 'instance-id',
@@ -146,12 +177,19 @@ def function():
     info = _ec2_info(instances[0])
     log.trace("[ec2-data] setting tags grains")
     tags = _ec2_tags(instances[0]['Tags'])
-
     log.trace("[ec2-data] Updating grains...")
     grains.update({'ec2-tags': tags})
     grains.update({'ec2-info': info})
     grains.update({'ec2-disks': disks})
     grains.update({'ec2-network': network})
     log.trace("create grains complete")
-    return {'ec2-data': grains}
-    #print "{'ec2-data': %s}" % (grains)
+    return {
+        'name': global_grains['name'],
+        'region': global_grains['region'],
+        'role': global_grains['role'],
+        'application': global_grains['application'],
+        'environment': global_grains['environment'],
+        'profile': global_grains['profile'],
+        'ec2-data': grains
+    }
+    # print "{'ec2-data': %s}" % (grains)

@@ -1,0 +1,2 @@
+# needed for rpm rollbacks
+%_repackage_all_erasures 1

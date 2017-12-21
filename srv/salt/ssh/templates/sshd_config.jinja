@@ -1,0 +1,50 @@
+Port {{  pillar['ssh']['config']['port'] }}
+Protocol {{  pillar['ssh']['config']['protocol'] }}
+PidFile {{  pillar['ssh']['config']['pidfile'] }}
+LogLevel {{  pillar['ssh']['config']['log_level'] }}
+SyslogFacility {{  pillar['ssh']['config']['syslogfacility'] }}
+
+PermitEmptyPasswords {{  pillar['ssh']['config']['permit_empty_passwords'] }}
+PubKeyAuthentication {{  pillar['ssh']['config']['pubkey_auth'] }}
+DSAAuthentication {{  pillar['ssh']['config']['dsa_auth'] }}
+IgnoreRhosts {{  pillar['ssh']['config']['ignore_rhosts'] }}
+LoginGraceTime {{  pillar['ssh']['config']['login_grace_time'] }}
+StrictModes {{  pillar['ssh']['config']['strict_modes'] }}
+MaxAuthTries {{  pillar['ssh']['config']['max_auth_tries'] }}
+PermitRootLogin {{  pillar['ssh']['config']['root_allowed'] }}
+GatewayPorts {{  pillar['ssh']['config']['gateway_ports'] }}
+TCPKeepAlive {{  pillar['ssh']['config']['tcp_keepalive'] }}
+UsePam {{  pillar['ssh']['config']['usepam'] }}
+ClientAliveInterval {{  pillar['ssh']['config']['client_alive_interval'] }}
+ClientAliveCountMax {{  pillar['ssh']['config']['client_alive_max'] }}
+PermitTunnel {{  pillar['ssh']['config']['permit_tunnel'] }}
+PasswordAuthentication {{  pillar['ssh']['config']['passwordauthentication'] }}
+ChallengeResponseAuthentication {{  pillar['ssh']['config']['challengeresponseauthentication'] }}
+MaxStartups {{  pillar['ssh']['config']['maxstartups'] }}
+X11Forwarding {{  pillar['ssh']['config']['x11_forwarding'] }}
+AllowTcpForwarding {{  pillar['ssh']['config']['allow_tcp_forwarding'] }}
+UsePrivilegeSeparation {{ pillar['ssh']['config']['use_privilege_separation'] }}
+AllowAgentForwarding {{  pillar['ssh']['config']['allow_agent_forwarding'] }}
+MaxSessions {{  pillar['ssh']['config']['maxsessions'] }}
+LoginGraceTime {{  pillar['ssh']['config']['login_gracetime'] }}
+UseDNS {{  pillar['ssh']['config']['use_dns'] }}
+AuthorizedKeysFile {{  pillar['ssh']['config']['keyfile'] }}
+PrintMotd {{  pillar['ssh']['config']['print_motd'] }}
+PrintLastLog {{  pillar['ssh']['config']['print_lastlog'] }}
+#Banner {{  pillar['ssh']['config']['banner'] }}
+MACs hmac-sha1
+Ciphers 3des-cbc,aes256-ctr,aes192-ctr,aes128-ctr,arcfour256
+
+# Accept locale-related environment variables
+AcceptEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES
+AcceptEnv LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT
+AcceptEnv LC_IDENTIFICATION LC_ALL LANGUAGE
+AcceptEnv XMODIFIERS
+
+{% if grains['role'] == "bastion" %}
+Match Group jailed
+  AuthorizedKeysFile {{  pillar['ssh']['config']['jailed_keyfile'] }}
+  ChrootDirectory /export/jail
+  AllowTCPForwarding yes
+  X11Forwarding no
+{% endif %}

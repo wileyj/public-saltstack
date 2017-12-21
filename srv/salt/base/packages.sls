@@ -1,27 +1,42 @@
 # base.packages
-{% set os_family = grains['os_family'] | default(None) %}
 {% set packages = pillar['packages'] | default(None) %}
-{% if packages %}
-{% set global_packages = pillar['packages']['base'] | default(None) %}
-{% set redhat_packages = pillar['packages']['yum'] | default(None) %}
-{% set debian_packages = pillar['packages']['apt'] | default(None) %}
 
-{% if global_packages %}
-    base packages:
-      pkg.installed:
-        - refresh: True
-        - pkgs: {{ global_packages }}
+{% set base_packages = pillar['packages']['base'] | default(None) %}
+{% if packages and base_packages%}
+base_packages:
+  pkg.installed:
+    - refresh: True
+    - pkgs: {{ base_packages }}
 {% endif %}
 
-{% if os_family == 'RedHat' and redhat_packages %}
-    base {{ os_family}} packages:
-      pkg.installed:
-        - pkgs: {{ redhat_packages }}
+{% set os_packages = pillar['packages']['os'] | default(None) %}
+{% if packages and os_packages %}
+base_os_packages:
+  pkg.installed:
+    - refresh: True
+    - pkgs: {{ os_packages }}
 {% endif %}
 
-{% if os_family == 'Debian' and debian_packages %}
-    base {{ os_family}} packages:
-      pkg.installed:
-        - pkgs: {{ debian_packages }}
+{% set python_packages = pillar['packages']['python'] | default(None) %}
+{% if packages and python_packages %}
+python_packages:
+  pkg.installed:
+    - refresh: True
+    - pkgs: {{ python_packages }}
 {% endif %}
+
+{% set perl_packages = pillar['packages']['perl'] | default(None) %}
+{% if packages and perl_packages %}
+perl_packages:
+  pkg.installed:
+    - refresh: True
+    - pkgs: {{ perl_packages }}
+{% endif %}
+
+{% set ruby_packages = pillar['packages']['ruby'] | default(None) %}
+{% if packages and ruby_packages %}
+ruby_packages:
+  pkg.installed:
+    - refresh: True
+    - pkgs: {{ ruby_packages }}
 {% endif %}

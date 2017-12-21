@@ -11,9 +11,9 @@
 {% if application %}
     {% set application_users = pillar['application']['users'] | default(None) %}
     {% set application_groups = pillar['application']['groups'] | default(None) %}
-    {% if application and application_users and application_groups and grains['instance']['role'] %}
-        {% set owner_user = pillar['application']['users'][grains['instance']['application']]['name'] %}
-        {% set owner_group = pillar['application']['groups'][grains['instance']['application']]['name'] %}
+    {% if application and application_users and application_groups and grains['role'] %}
+        {% set owner_user = pillar['application']['users'][grains['application']]['name'] %}
+        {% set owner_group = pillar['application']['groups'][grains['application']]['name'] %}
     {% endif %}
 {% endif %}
 {% if role %}
@@ -21,9 +21,9 @@
     {% set role_groups = pillar['role']['groups'] | default(None) %}
     {% set role_dirs = pillar['role']['dirs'] | default(None) %}
     {% set role_files = pillar['role']['files'] | default(None) %}
-    {% if role_users and application_groups and grains['instance']['role'] %}
-        {% set owner_user = pillar['role']['users'][grains['instance']['role']]['name'] %}
-        {% set owner_group = pillar['role']['groups'][grains['instance']['role']]['name'] %}
+    {% if role_users and application_groups and grains['role'] %}
+        {% set owner_user = pillar['role']['users'][grains['role']]['name'] %}
+        {% set owner_group = pillar['role']['groups'][grains['role']]['name'] %}
     {% endif %}
     {% if role_dirs %}
         {% set role_dirs_create = pillar['role']['dirs']['create'] | default(None) %}

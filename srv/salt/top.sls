@@ -1,9 +1,8 @@
 # topfile
-{% set virt      = grains['virtual_subtype'] | default(None)  %}
 {% set os_family = grains['os_family']       | default(None)  %}
-{% set environment = grains['instance']['environment'] | default(None) %}
-{% set role = grains['instance']['role'] | default(None) %}
-{% set cleanup = grains['instance']['cleanup']| default(None)  %}
+{% set environment = grains['environment'] | default(None) %}
+{% set application = grains['application'] | default(None) %}
+{% set virt = grains['virtual_subtype'] | default(None)  %}
 
 {% if environment and environment == 'prod' %}
     {% set file_root = "/srv/salt" %}
@@ -15,29 +14,45 @@
     {% set file_root = "/srv/salt" %}
 {% endif %}
 file_roots:
-    dev:
-        - {{ file_root }}
-    qa:
-        - {{ file_root }}
-    prod:
-        - {{ file_root }}
+  dev:
+    - {{ file_root }}
+  qa:
+    - {{ file_root }}
+  prod:
+    - {{ file_root }}
 
 base:
-    '*':
-        - resolver
-        - repo
-        - base
-        - python
-        - limits
-        - application
-{% if virt == 'Docker' and os_family == 'RedHat' %}
-        - runit
-{% endif %}
+  '*':
+    - limits
+    - resolver
+    - repo
 {% if virt != 'Docker' %}
-        - sysctl
-        - logrotate.jobs
-        #- harden
+    - ssh
+    - sysctl
 {% endif %}
-{% if cleanup %}
-        - cleanup
+    - base
+
+# this is where we run formulas for any role assigned to the host (retrieved by name)
+# - roles
+
+{% if salt['grains.get']('role', False)  and salt['grains.get']('role') != 'base' %}
+{% set role = grains['role'] | default(None) %}
+{% set role_sls = '{0}/{1}/init.sls'.format(file_root, role) -%}
+{% if salt['file.file_exists'](role_sls) %}
+  'role:{{ role }}':
+    - match: grain
+    - ignore_missing: True
+    - {{ role }}
 {% endif %}
+{% endif %}
+    - sudoers
+{% if virt != 'Docker' %}
+    - denyhosts
+    - sensu
+    - harden
+{% endif %}
+
+# # this should always be run last
+# {% if salt['grains.get']('instance:cleanup', False)  %}
+#     - cleanup
+# {% endif %}

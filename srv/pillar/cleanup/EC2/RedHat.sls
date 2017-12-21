@@ -21,18 +21,10 @@ os_cleanup:
             - colorama
             - iniparse
             - kitchen
-        ruby:
-        perl:
     dirs:
-        delete:
         empty:
             - /var/cache/yum
             - /var/lib/yum
-        symlink:
-        create:
     files:
-        delete:
         empty:
             - /var/log/yum.log
-        symlink:
-        create:

@@ -1,5 +1,6 @@
-# rabbitmq.init
 include:
-  - rabbitmq.packages
-  - rabbitmq.files
-  - rabbitmq.services
+  - repo.{{ grains['os_family'] }}.rabbitmq
+  - rabbitmq.server
+  - rabbitmq.config
+  - rabbitmq.plugins
+  - rabbitmq.rabbit-management

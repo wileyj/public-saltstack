@@ -1,0 +1,8 @@
+/var/log/iptables {
+  missingok
+  notifempty
+  create 0644 root root
+  rotate 4
+  compress
+  size 50M
+}

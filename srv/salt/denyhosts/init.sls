@@ -2,8 +2,9 @@
 include:
   - denyhosts.packages
   - denyhosts.files
+  - denyhosts.templates
 {% if grains['virtual_subtype'] == 'Docker' %}
-    - denyhosts.runit
+  - denyhosts.runit
 {% else %}
-    - denyhosts.services
+  - denyhosts.services
 {% endif %}

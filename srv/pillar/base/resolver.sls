@@ -6,9 +6,9 @@ resolver:
 {% endif %}
         - 8.8.8.8
         - 8.8.4.4
-    searchpaths:
-      - moil.io
-      - wileyj.net
+    # searchpaths:
+    #   - moil.io
+    #   - wileyj.net
     options:
         - rotate
         - timeout:1

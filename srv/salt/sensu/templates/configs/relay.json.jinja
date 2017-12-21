@@ -1,0 +1,8 @@
+{
+    "relay": {
+        "graphite": {
+            "host": {{ pillar['sensu']['graphite']['host']|yaml_dquote }},
+            "port": {{ pillar['sensu']['graphite']['port'] }}
+        }
+    }
+}

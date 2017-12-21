@@ -1,5 +1,5 @@
 # denyhosts.runit
-denyhosts runit dir:
+/etc/service/denyhosts:
     file.directory:
         - name: /etc/service/denyhosts
         - user: root
@@ -7,7 +7,7 @@ denyhosts runit dir:
         - mode: 0755
         - makedirs: True
 
-denyhosts runit script:
+/etc/service/denyhosts/run:
     file.managed:
         - name: /etc/service/denyhosts/run
         - user: root

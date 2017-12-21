@@ -1,0 +1,6 @@
+{
+    "redis": {
+        "host":     {{ pillar['sensu']['redis']['host']|yaml_dquote }},
+        "port":     {{ pillar['sensu']['redis']['port'] }}
+    }
+}

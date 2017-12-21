@@ -4,4 +4,4 @@
 {% endfor %}{% endif %}
 {% if pillar['resolver']['searchpath'] is defined  and pillar['resolver']['searchpath'] != None %}search {% for key,val in pillar['resolver']['searchpath'] %} {{ key }} {% endfor %}{% endif %}
 {% if pillar['domain'] is defined  and pillar['domain'] != None %}domain {{ pillar['domain'] }}{% endif %}
-{% if pillar['resolver']['options'] is defined  and pillar['resolver']['options'] != None %}option {% for option in pillar['resolver']['options'] %}{{ option }} {% endfor %}{% endif %}
+{% if pillar['resolver']['options'] is defined  and pillar['resolver']['options'] != None %}options {% for option in pillar['resolver']['options'] %}{{ option }} {% endfor %}{% endif %}

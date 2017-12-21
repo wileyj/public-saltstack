@@ -1,2 +1,0 @@
-# base.files-pillar
-base:

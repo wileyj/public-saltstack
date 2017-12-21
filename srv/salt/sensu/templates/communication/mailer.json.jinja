@@ -1,0 +1,22 @@
+{
+    "mailer": {
+        "mail_from": {{ pillar['sensu']['mail']['from']|yaml_dquote }},
+        "mail_to": {{ pillar['sensu']['mail']['to']|yaml_dquote }},
+        "smtp_address": "localhost",
+        "smtp_port": "25",
+        "subscriptions": {
+            "vpn": {
+                "mail_to": {{ pillar['sensu']['mail']['dev']|yaml_dquote }}
+            },
+            "default": {
+                "mail_to": {{ pillar['sensu']['mail']['alerts']|yaml_dquote }}
+            },
+            "apache webservice": {
+                "mail_to": {{ pillar['sensu']['mail']['alerts']|yaml_dquote }}
+            },
+            "nginx webservice": {
+                "mail_to": {{ pillar['sensu']['mail']['alerts']|yaml_dquote }}
+            }
+        }
+    }
+}

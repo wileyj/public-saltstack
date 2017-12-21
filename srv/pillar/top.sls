@@ -2,67 +2,74 @@
 {% set os = grains['os'] | default(None)  %}
 {% set os_family = grains['os_family'] | default(None)  %}
 {% set osfullname = grains['osfullname']| default(None)  %}
-{% set virt = grains["virtual_subtype"] | default(None)  %}
-{% set application = grains['instance']['application'] | default(None)  %}
-{% set role = grains['instance']['role'] | default(None)  %}
-{% set environment = grains['instance']['environment']| default(None)  %}
+{% set virt = grains['virtual_subtype'] | default(None)  %}
+{% set application = grains['application'] | default(None)  %}
+{% set role = grains['role'] | default(None)  %}
+{% set environment = grains['environment']| default(None)  %}
+{% set profile = grains['profile']| default(None)  %}
 base:
-    '*':
-        - base/resolver
-        - base/base
-        # - base/files
-        - base/limits
-        - base/packages
-        - base/modules
-        - base/sysctl
-        - base/logrotate
-        - base/ntp
-        - users/base
-        #- base/statsd
-    {% if virt != 'Docker' %}
-        - base/sensu
-    {% endif %}
+  '*':
+    - base/resolver
+    - base/base
+    - base/harden
+    - base/limits
+    - base/packages
+    - base/services
+    - base/modules
+    - base/sysctl
+    - base/logrotate
+    - base/denyhosts
+    - private/base
+    - private/resolver
+    - private/ssh
+    - base/ntp
+    - users/base
+  {% if virt != 'Docker' %}
+    - users/sensu
+    - base/sensu
+    # - base/statsd
+    - private/sensu
+    - private/users/base
+  {% endif %}
+    - base/sudo
 
-    # OS
-    "os:{{ os }}":
-        - match: grain
-        - ignore_missing: True
-        - os/{{ os_family }}
-        - os/{{ os_family }}/{{ os }}
-        - os/files
+# OS
+  "os:{{ os }}":
+    - match: grain
+    - ignore_missing: True
+    - os/{{ os_family }}
+    - os/{{ os_family }}/{{ os }}
+    - os/files
 
+# environment
 {% if environment %}
-    # environment
-    "instance:environment:{{ environment }}":
-        - match: grain
-        - ignore_missing: True
-        - users/environment/{{ environment }}
-        - environment/{{ environment }}
+  "environment:{{ environment }}":
+    - match: grain
+    - ignore_missing: True
+    - environment/{{ environment }}
 {% endif %}
 
-{% if application %}
-    # application
-    "instance:application:{{ application }}":
-        - match: grain
-        - ignore_missing: True
-        - users/application/{{ application }}
-        - application/{{ application }}
-{% endif %}
-
-    # role
+# role
 {% if role %}
-    "instance:role:{{ role }}":
-        - match: grain
-        - ignore_missing: True
-        - users/role/{{ application }}/{{ role }}
-        - role/{{ application }}/{{ role }}
+  "role:{{ role }}":
+    - match: grain
+    - ignore_missing: True
+    - users/{{ role }}
+    - role/{{ role }}
+    - private/role/{{ role }}
+    - private/users/{{ role }}
 {% endif %}
 
-    # cleanup
-    "virtual_subtype:{{ virt }}":
-        - match: grain
-        - ignore_missing: True
-        - virtual_type/{{ virt}}/{{ os_family }}
-        - virtual_type/{{ virt}}/{{ os_family }}/{{ os }}
-        - cleanup/{{ virt }}/common
-        - cleanup/{{ virt }}/{{ os_family }}
+# match a role of rabbitmq and a profile of sensu to build the rabbitmq sensu server
+  'G@role:rabbitmq and G@profile:sensu':
+    - match: compound
+    - ignore_missing: True
+    - role/sensu/rabbitmq
+    - private/role/sensu/rabbitmq
+
+# match a role of redis and a profile of sensu to build the redis sensu server
+  'G@role:redis and G@profile:sensu':
+    - match: compound
+    - ignore_missing: True
+    - role/sensu/redis
+    - private/role/sensu/redis

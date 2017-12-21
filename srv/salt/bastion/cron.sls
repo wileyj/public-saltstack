@@ -1,6 +1,8 @@
 # bastion.cron
-chroot.cron:
-    minute : '00'
-    hour   : '*/2'
-    user   : 'root'
-    command: '/bin/rm -rf /etc/sysconfig/chroot_setup 2>&1'
+bastion cron - etc/cron.daily/chroot_setup.cron:
+    file.managed:
+        - name: /etc/cron.daily/chroot_setup.cron
+        - source: salt://bastion/files/etc/cron.daily/chroot_setup.cron
+        - user: root
+        - group: root
+        - mode: 644

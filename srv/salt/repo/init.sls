@@ -3,3 +3,7 @@
 
 include:
     - repo.{{ os_family }}
+
+clean-repo:
+  module.run:
+    - name: pkg.refresh_db

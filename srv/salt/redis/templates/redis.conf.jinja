@@ -2,64 +2,106 @@
 {{ '#' }} Redis configuration
 
 {{ '#' }} Global
-daemonize yes
+daemonize no
 pidfile /var/run/redis/redis.pid
-{% if pillar['redis']['port'] %}port {{ pillar['redis']['port'] }}{% endif %}
-{% if pillar['redis']['listen'] %}{{ '#' }}bind {{ pillar['redis']['listen'] }}{% endif %}
-{% if grains['ip_address'] %}{{ '#' }}bind {{ grains['ip_address'] }}{% endif %}
-{% if pillar['redis']['unixsocket'] %}
-{{ '#' }}unixsocket {{ pillar['redis']['unixsocket']}}
-{{ '#' }}unixsocketperm {{ pillar['redis']['unixsocket_perm']}}
+{%- if salt.pillar.get('redis:config:port') %}
+port {{ salt.pillar.get('redis:config:port') }}
 {% endif %}
-{% if pillar['redis']['timeout'] %}timeout {{ pillar['redis']['timeout'] }}{% endif %}
-{% if pillar['redis']['log_level'] %}loglevel {{ pillar['redis']['log_level'] }}{% endif %}
-{% if pillar['redis']['logfile'] %}logfile {{ pillar['redis']['logfile'] }}{% endif %}
-{% if pillar['redis']['databases'] %}databases {{ pillar['redis']['databases'] }}{% endif %}
-{% if pillar['redis']['tcp_backlog'] %}tcp-backlog {{ pillar['redis']['tcp_backlog'] }}{% endif %}
+{%- if salt.pillar.get('redis:config:listen') %}{{ '#' }}bind {{ salt.pillar.get('redis:config:listen') }}
+{% endif %}
+{%- if salt.pillar.get('ec2-data:ec2-network:private_ip_address') %}{{ '#' }}bind {{ salt.pillar.get('ec2-data:ec2-network:private_ip_address') }}
+{% endif %}
+{%- if salt.pillar.get('redis:config:unixsocket') %}
+{{ '#' }}unixsocket {{ salt.pillar.get('redis:config:unixsocket')}}
+{%- if salt.pillar.get('redis:config:unixsocket_perm') %}
+{{ '#' }}unixsocketperm {{ salt.pillar.get('redis:config:unixsocket_perm')}}
+{% endif %}
+{% endif %}
+{%- if salt.pillar.get('redis:config:timeout') %}timeout {{ salt.pillar.get('redis:config:timeout') }}
+{% endif %}
+{%- if salt.pillar.get('redis:config:log_level') %}loglevel {{ salt.pillar.get('redis:config:log_level') }}
+{% endif %}
+{%- if salt.pillar.get('redis:config:logfile') %}logfile {{ salt.pillar.get('redis:config:logfile') }}
+{% endif %}
+{%- if salt.pillar.get('redis:config:databases') %}databases {{ salt.pillar.get('redis:config:databases') }}
+{% endif %}
+{%- if salt.pillar.get('redis:config:tcp_backlog') %}tcp-backlog {{ salt.pillar.get('redis:config:tcp_backlog') }}
+{% endif %}
 
 {{ '#' }} Snapshotting
-{% if pillar['redis']['save1'] %}save {{ pillar['redis']['save1'] }}{% endif %}
-{% if pillar['redis']['save10'] %}save {{ pillar['redis']['save10'] }}{% endif %}
-{% if pillar['redis']['save1000'] %}save {{ pillar['redis']['save1000'] }}{% endif %}
-{% if pillar['redis']['rdbcompression'] %}rdbcompression {{ pillar['redis']['rdbcompression'] }}{% endif %}
-{% if pillar['redis']['dbfilename'] %}dbfilename {{ pillar['redis']['dbfilename'] }}{% endif %}
-{% if pillar['redis']['rdb_dir'] %}dir {{ pillar['redis']['rdb_dir'] }}{% endif %}
+{%- if salt.pillar.get('redis:config:save1') %}save {{ salt.pillar.get('redis:config:save1') }}
+{% endif %}
+{%- if salt.pillar.get('redis:config:save10') %}save {{ salt.pillar.get('redis:config:save10') }}
+{% endif %}
+{%- if salt.pillar.get('redis:config:save1000') %}save {{ salt.pillar.get('redis:config:save1000') }}
+{% endif %}
+{%- if salt.pillar.get('redis:config:rdbcompression') %}rdbcompression {{ salt.pillar.get('redis:config:rdbcompression') }}
+{% endif %}
+{%- if salt.pillar.get('redis:config:dbfilename') %}dbfilename {{ salt.pillar.get('redis:config:dbfilename') }}
+{% endif %}
+{%- if salt.pillar.get('redis:config:rdb_dir') %}dir {{ salt.pillar.get('redis:config:rdb_dir') }}
+{% endif %}
 
 {{ '#' }} Replication
-{% if pillar['redis']['masterip'] %}
-{% if pillar['redis']['masterport'] %}{{ '#' }}slaveof {{ pillar['redis']['master_ip'] }} {{ pillar['redis']['masterport'] }}{% endif %}
-{% if pillar['redis']['masterauth'] %}{{ '#' }}masterauth {{ pillar['redis']['masterauth'] }}{% endif %}
-{% if pillar['redis']['slave_serve_stale_data'] %}{{ '#' }}slave-serve-stale-data {{ pillar['redis']['slave_serve_stale_data'] }}{% endif %}
-{% if pillar['redis']['repl_ping_slave_period'] %}{{ '#' }}repl-ping-slave-period {{ pillar['redis']['repl_ping_slave_period'] }}{% endif %}
-{% if pillar['redis']['repl_timeout'] %}{{ '#' }}repl-timeout {{ pillar['redis']['repl_timeout'] }}{% endif %}
+{%- if salt.pillar.get('redis:config:masterip') %}
+{%- if salt.pillar.get('redis:config:masterport') %}{{ '#' }}slaveof {{ salt.pillar.get('redis:config:master_ip') }} {{ salt.pillar.get('redis:config:masterport') }}
+{% endif %}
+{%- if salt.pillar.get('redis:config:masterauth') %}{{ '#' }}masterauth {{ salt.pillar.get('redis:config:masterauth') }}
+{% endif %}
+{%- if salt.pillar.get('redis:config:slave_serve_stale_data') %}{{ '#' }}slave-serve-stale-data {{ salt.pillar.get('redis:config:slave_serve_stale_data') }}
+{% endif %}
+{%- if salt.pillar.get('redis:config:repl_ping_slave_period') %}{{ '#' }}repl-ping-slave-period {{ salt.pillar.get('redis:config:repl_ping_slave_period') }}
+{% endif %}
+{%- if salt.pillar.get('redis:config:repl_timeout') %}{{ '#' }}repl-timeout {{ salt.pillar.get('redis:config:repl_timeout') }}
+{% endif %}
 {% endif %}
 
 {{ '#' }} Security
-{% if pillar['redis']['repl_timeout'] %}{{ '#' }}requirepass {{ pillar['redis']['requirepass'] }}{% endif %}
-{% if pillar['redis']['repl_timeout'] %}rename-command CONFIG {{ pillar['redis']['command_config'] }}{% endif %}
-{% if pillar['redis']['repl_timeout'] %}rename-command FLUSHALL {{ pillar['redis']['command_flushall'] }}{% endif %}
-{% if pillar['redis']['repl_timeout'] %}rename-command FLUSHDB {{ pillar['redis']['command_flushdb'] }}{% endif %}
+{%- if salt.pillar.get('redis:config:repl_timeout') %}{{ '#' }}requirepass {{ salt.pillar.get('redis:config:requirepass') }}
+{% endif %}
+{%- if salt.pillar.get('redis:config:repl_timeout') %}rename-command CONFIG {{ salt.pillar.get('redis:config:command_config') }}
+{% endif %}
+{%- if salt.pillar.get('redis:config:repl_timeout') %}rename-command FLUSHALL {{ salt.pillar.get('redis:config:command_flushall') }}
+{% endif %}
+{%- if salt.pillar.get('redis:config:repl_timeout') %}rename-command FLUSHDB {{ salt.pillar.get('redis:config:command_flushdb') }}
+{% endif %}
 
 {{ '#' }}Limits
-{% if pillar['redis']['maxclients'] %}maxclients {{ pillar['redis']['maxclients'] }}{% endif %}
-{% if pillar['redis']['maxmemory'] %}maxmemory {{ pillar['redis']['maxmemory'] }}{% endif %}
-{% if pillar['redis']['maxmemory_policy'] %}{{ '#' }}maxmemory-policy {{ pillar['redis']['maxmemory_policy'] }}{% endif %}
+{%- if salt.pillar.get('redis:config:maxclients') %}maxclients {{ salt.pillar.get('redis:config:maxclients') }}
+{% endif %}
+{%- if salt.pillar.get('redis:config:maxmemory') %}maxmemory {{ salt.pillar.get('redis:config:maxmemory') }}
+{% endif %}
+{%- if salt.pillar.get('redis:config:maxmemory_policy') %}{{ '#' }}maxmemory-policy {{ salt.pillar.get('redis:config:maxmemory_policy') }}
+{% endif %}
 
 {{ '#' }} Append only mode
-{% if pillar['redis']['appendonly'] %}appendonly {{ pillar['redis']['appendonly'] }}{% endif %}
-{% if pillar['redis']['appendfsync'] %}appendfsync {{ pillar['redis']['appendfsync'] }}{% endif %}
-{% if pillar['redis']['no_appendfsync_on_rewrite'] %}no-appendfsync-on-rewrite {{ pillar['redis']['no_appendfsync_on_rewrite'] }}{% endif %}
-{% if pillar['redis']['auto_aof_rewrite_percentage'] %}auto-aof-rewrite-percentage {{ pillar['redis']['auto_aof_rewrite_percentage'] }}{% endif %}
-{% if pillar['redis']['auto_aof_rewrite_min_size'] %}auto-aof-rewrite-min-size {{ pillar['redis']['auto_aof_rewrite_min_size'] }}{% endif %}
+{%- if salt.pillar.get('redis:config:appendonly') %}appendonly {{ salt.pillar.get('redis:config:appendonly') }}
+{% endif %}
+{%- if salt.pillar.get('redis:config:appendfsync') %}appendfsync {{ salt.pillar.get('redis:config:appendfsync') }}
+{% endif %}
+{%- if salt.pillar.get('redis:config:no_appendfsync_on_rewrite') %}no-appendfsync-on-rewrite {{ salt.pillar.get('redis:config:no_appendfsync_on_rewrite') }}
+{% endif %}
+{%- if salt.pillar.get('redis:config:auto_aof_rewrite_percentage') %}auto-aof-rewrite-percentage {{ salt.pillar.get('redis:config:auto_aof_rewrite_percentage') }}
+{% endif %}
+{%- if salt.pillar.get('redis:config:auto_aof_rewrite_min_size') %}auto-aof-rewrite-min-size {{ salt.pillar.get('redis:config:auto_aof_rewrite_min_size') }}
+{% endif %}
 
 {{ '#' }} Slow log
-{% if pillar['redis']['slowlog_log_slower_than'] %}slowlog-log-slower-than {{ pillar['redis']['slowlog_log_slower_than'] }}{% endif %}
-{% if pillar['redis']['slowlog_max_len'] %}slowlog-max-len {{ pillar['redis']['slowlog_max_len'] }}{% endif %}
+{%- if salt.pillar.get('redis:config:slowlog_log_slower_than') %}slowlog-log-slower-than {{ salt.pillar.get('redis:config:slowlog_log_slower_than') }}
+{% endif %}
+{%- if salt.pillar.get('redis:config:slowlog_max_len') %}slowlog-max-len {{ salt.pillar.get('redis:config:slowlog_max_len') }}
+{% endif %}
 
 {{ '#' }} Advanced Config
-{% if pillar['redis']['list_max_ziplist_entries'] %}list-max-ziplist-entries {{ pillar['redis']['list_max_ziplist_entries'] }}{% endif %}
-{% if pillar['redis']['list_max_ziplist_value'] %}list-max-ziplist-value {{ pillar['redis']['list_max_ziplist_value'] }}{% endif %}
-{% if pillar['redis']['set_max_intset_entries'] %}set-max-intset-entries {{ pillar['redis']['set_max_intset_entries'] }}{% endif %}
-{% if pillar['redis']['zset_max_ziplist_entries'] %}zset-max-ziplist-entries {{ pillar['redis']['zset_max_ziplist_entries'] }}{% endif %}
-{% if pillar['redis']['zset_max_ziplist_value'] %}zset-max-ziplist-value {{ pillar['redis']['zset_max_ziplist_value'] }}{% endif %}
-{% if pillar['redis']['activerehashing'] %}activerehashing {{ pillar['redis']['activerehashing'] }}{% endif %}
+{%- if salt.pillar.get('redis:config:list_max_ziplist_entries') %}list-max-ziplist-entries {{ salt.pillar.get('redis:config:list_max_ziplist_entries') }}
+{% endif %}
+{%- if salt.pillar.get('redis:config:list_max_ziplist_value') %}list-max-ziplist-value {{ salt.pillar.get('redis:config:list_max_ziplist_value') }}
+{% endif %}
+{%- if salt.pillar.get('redis:config:set_max_intset_entries') %}set-max-intset-entries {{ salt.pillar.get('redis:config:set_max_intset_entries') }}
+{% endif %}
+{%- if salt.pillar.get('redis:config:zset_max_ziplist_entries') %}zset-max-ziplist-entries {{ salt.pillar.get('redis:config:zset_max_ziplist_entries') }}
+{% endif %}
+{%- if salt.pillar.get('redis:config:zset_max_ziplist_value') %}zset-max-ziplist-value {{ salt.pillar.get('redis:config:zset_max_ziplist_value') }}
+{% endif %}
+{%- if salt.pillar.get('redis:config:activerehashing') %}activerehashing {{ salt.pillar.get('redis:config:activerehashing') }}
+{% endif %}

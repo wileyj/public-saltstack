@@ -1,8 +1,8 @@
 # harden.sysctl
-harden sysctl - kernel.exec-shield:
-  sysctl.present:
-    - name: kernel.exec-shield
-    - value: 1
+# harden sysctl - kernel.exec-shield:
+#   sysctl.present:
+#     - name: kernel.exec-shield
+#     - value: 1
 
 harden sysctl - kernel.randomize_va_space:
   sysctl.present:
@@ -26,13 +26,14 @@ harden sysctl - net.ipv4.icmp_echo_ignore_broadcasts:
   sysctl.present:
     - name: net.ipv4.icmp_echo_ignore_broadcasts
     - value: 1
-harden sysctl - net.ipv4.icmp_ignore_bogus_error_messages:
+
+harden sysctl - net.ipv4.icmp_ignore_bogus_error_responses:
   sysctl.present:
-    - name: net.ipv4.icmp_ignore_bogus_error_messages
+    - name: net.ipv4.icmp_ignore_bogus_error_responses
     - value: 1
 
 # Make sure spoofed packets get logged
 harden sysctl - net.ipv4.conf.all.log_martians:
   sysctl.present:
-    - name: net.ipv4.conf.all.log_martian
+    - name: net.ipv4.conf.all.log_martians
     - value: 1

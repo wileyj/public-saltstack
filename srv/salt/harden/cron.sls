@@ -1,8 +1,8 @@
 # harden.cron
-include:
-  - harden.packages
+# include:
+#   - harden.packages
 
-harden cron - /etc/cron.daily/00logwatch.cron:
+/etc/cron.daily/00logwatch.cron:
     file.managed:
         - name: /etc/cron.daily/00logwatch.cron
         - template: jinja
@@ -10,7 +10,7 @@ harden cron - /etc/cron.daily/00logwatch.cron:
         - require:
             - pkg: harden.packages
 
-harden cron - /etc/cron.daily/aide.cron:
+/etc/cron.daily/aide.cron:
     file.managed:
         - name: /etc/cron.daily/aide.cron
         - template: jinja
@@ -18,7 +18,7 @@ harden cron - /etc/cron.daily/aide.cron:
         - require:
             - pkg: harden.packages
 
-harden cron - /etc/cron.daily/chkrootkit.cron:
+/etc/cron.daily/chkrootkit.cron:
     file.managed:
         - name: /etc/cron.daily/chkrootkit.cron
         - template: jinja
