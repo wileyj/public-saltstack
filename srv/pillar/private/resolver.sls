@@ -1,0 +1,3 @@
+resolver:
+  searchpaths:
+    - local.com
