@@ -28,4 +28,4 @@ Thumbs.db
 
 # Project private files #
 #########################
-# srv/pillar/private/
+srv/pillar/private

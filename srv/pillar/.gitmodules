@@ -1,0 +1,18 @@
+[submodule "srv/salt/consul"]
+    path = srv/salt/consul
+    url = https://github.com/saltstack-formulas/consul-formula
+
+[submodule "srv/salt/nomad"]
+    path = srv/salt/nomad
+    url = https://github.com/saltstack-formulas/nomad-formula
+
+[submodule "srv/salt/vault"]
+    path = srv/salt/vault
+    url = https://github.com/mitodl/vault-formula
+
+[submodule "srv/salt/os-hardening"]
+    path = srv/salt/os-hardening
+    url = https://github.com/saltstack-formulas/os-hardening-formula
+[submodule "srv/salt/sensu/files/etc/sensu/plugins"]
+	path = srv/salt/sensu/files/etc/sensu/plugins
+	url = https://github.com/wileyj/public-monitoring
